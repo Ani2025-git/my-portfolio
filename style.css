@@ -292,4 +292,33 @@ footer{
   background:linear-gradient(90deg,#00f7ff,#8b5cf6);
   -webkit-background-clip:text;
   color:transparent;
+
+}
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #0a0f1c;
+    position: absolute;
+    top: 70px; 
+    right: 0;
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
 }
