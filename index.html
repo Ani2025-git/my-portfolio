@@ -1,9 +1,11 @@
+Here is the complete HTML code for your portfolio website with a maintenance mode feature that users will see when they open the website.
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Animesh | Modern Portfolio</title>
+  <title>Animesh | Under Maintenance</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -12,393 +14,266 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
-      scroll-behavior: smooth;
     }
 
     body {
       background: linear-gradient(135deg, #0f172a, #111827, #1e1b4b);
       color: white;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    /* Intro Screen */
-    .intro-screen {
+    /* ========== MAINTENANCE MODE OVERLAY - FULL SCREEN ========== */
+    .maintenance-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100vh;
-      background: #0f172a;
+      height: 100%;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      z-index: 10000;
       display: flex;
-      justify-content: center;
       align-items: center;
-      z-index: 9999;
-      overflow: hidden;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .intro-text {
-      font-size: clamp(28px, 8vw, 50px);
-      letter-spacing: 4px;
-      opacity: 0;
-      transform: translateY(40px);
-      animation: introReveal 1.5s ease forwards;
-      text-align: center;
-      padding: 0 20px;
-    }
-    .intro-sub {
-      opacity: 0;
-      animation: fadeUp 1s ease 0.6s forwards;
-      color: #a0aec0;
-      font-size: clamp(14px, 4vw, 18px);
-    }
-    .intro-loader {
-      width: 60px;
-      height: 60px;
-      border: 3px solid rgba(0,247,255,0.2);
-      border-top: 3px solid #00f7ff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-top: 20px;
-      opacity: 0;
-      animation: fadeUp 0.5s ease 1s forwards, spin 1s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes introReveal {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .intro-text span {
-      background: linear-gradient(90deg, #00f7ff, #8b5cf6, #00f7ff);
-      background-size: 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glowMove 3s linear infinite;
-    }
-    @keyframes glowMove {
-      0% { background-position: 0; }
-      100% { background-position: 200%; }
+      justify-content: center;
+      transition: all 0.3s ease;
     }
 
-    /* NAV */
-    nav {
-      position: fixed;
-      width: 100%;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(12px);
-      z-index: 1000;
-      transition: 0.3s;
-    }
-    .logo {
-      font-size: clamp(22px, 6vw, 28px);
-      font-weight: 700;
-      background: linear-gradient(135deg, #fff, #00f7ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-    }
-    nav ul li {
-      margin-left: 30px;
-    }
-    nav ul li a {
-      text-decoration: none;
-      color: white;
-      transition: 0.3s;
-      font-weight: 500;
-      position: relative;
-      font-size: 16px;
-    }
-    nav ul li a i {
-      margin-right: 6px;
-      font-size: 14px;
-    }
-    nav ul li a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -5px;
-      left: 0;
-      background: #00f7ff;
-      transition: 0.3s;
-    }
-    nav ul li a:hover::after {
-      width: 100%;
-    }
-    .menu-toggle {
+    .maintenance-overlay.hide {
       display: none;
-      font-size: 28px;
-      cursor: pointer;
-      background: rgba(255,255,255,0.1);
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
-    }
-    @media (max-width: 768px) {
-      nav { padding: 14px 20px; }
-      .menu-toggle { display: flex; }
-      .nav-links {
-        position: absolute;
-        top: 70px;
-        right: 0;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        display: none;
-        background: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(20px);
-        padding: 24px 0;
-        border-radius: 0 0 24px 24px;
-        gap: 20px;
-      }
-      .nav-links.active { display: flex; }
-      .nav-links li { margin: 0; width: 100%; text-align: center; }
-      .nav-links li a { display: inline-block; padding: 10px 20px; font-size: 18px; }
     }
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 100px 8% 60px;
-      flex-wrap: wrap;
-      gap: 40px;
+    .maintenance-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 48px;
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 550px;
+      width: 90%;
+      animation: fadeInUp 0.6s ease;
+      border: 1px solid rgba(0, 247, 255, 0.2);
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
     }
-    .hero-left { flex: 1; min-width: 280px; }
-    .hero-left h1 { font-size: clamp(36px, 8vw, 55px); font-weight: 800; line-height: 1.2; }
-    .hero-left span {
-      background: linear-gradient(90deg, #00f7ff, #8b5cf6, #ff00ff, #00f7ff);
-      background-size: 200%;
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .maintenance-card .maintenance-icon {
+      font-size: 5rem;
+      color: #f39c12;
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    .maintenance-card h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #00f7ff, #8b5cf6);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: rainbowGlow 5s linear infinite;
+      margin-bottom: 0.5rem;
     }
-    @keyframes rainbowGlow {
-      0% { background-position: 0%; }
-      100% { background-position: 200%; }
+
+    .maintenance-card h2 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #a0aec0;
+      margin-bottom: 1rem;
     }
-    .hero-left .typing { margin-top: 20px; font-size: clamp(20px, 5vw, 28px); color: #0ff; font-weight: 500; }
-    .hero-right { flex: 0 0 auto; display: flex; justify-content: center; }
-    .social-icons-hero {
-      margin-top: 35px;
+
+    .maintenance-card p {
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .progress-bar-container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      height: 8px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, #00f7ff, #8b5cf6);
+      width: 65%;
+      height: 100%;
+      border-radius: 30px;
+      animation: progressPulse 2s ease infinite;
+    }
+
+    @keyframes progressPulse {
+      0%, 100% { opacity: 0.7; width: 60%; }
+      50% { opacity: 1; width: 70%; }
+    }
+
+    .countdown-timer {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #00f7ff;
+      margin: 1rem 0;
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+
+    .contact-info {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
+      padding: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .contact-info p {
+      margin: 0.5rem 0;
+      font-size: 0.85rem;
+    }
+
+    .contact-info i {
+      color: #00f7ff;
+      margin-right: 10px;
+    }
+
+    .notify-btn {
+      background: linear-gradient(90deg, #00f7ff, #8b5cf6);
+      color: #0f172a;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: 0.2s;
+      width: 100%;
+    }
+
+    .notify-btn:hover {
+      transform: scale(0.98);
+      box-shadow: 0 0 20px rgba(0, 247, 255, 0.4);
+    }
+
+    .social-links {
       display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
     }
-    .social-icons-hero a {
+
+    .social-links a {
       color: white;
-      font-size: 22px;
-      transition: 0.3s;
-      background: rgba(255,255,255,0.08);
-      width: 48px;
-      height: 48px;
+      font-size: 1.2rem;
+      transition: 0.2s;
+      background: rgba(255, 255, 255, 0.08);
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
     }
-    .social-icons-hero a:hover {
-      transform: translateY(-5px);
+
+    .social-links a:hover {
       color: #00f7ff;
-      background: rgba(0,247,255,0.2);
-    }
-    @media (max-width: 768px) {
-      .hero { flex-direction: column; text-align: center; padding-top: 100px; }
-      .hero-left { text-align: center; }
-      .social-icons-hero { justify-content: center; }
-      .hero-right { margin-top: 10px; }
+      background: rgba(0, 247, 255, 0.2);
+      transform: translateY(-3px);
     }
 
-    /* Sections */
-    .section { padding: 60px 5%; }
-    @media (min-width: 768px) { .section { padding: 80px 10%; } }
-    .section h2 {
-      font-size: clamp(28px, 7vw, 42px);
-      margin-bottom: 40px;
-      position: relative;
-      display: inline-block;
-    }
-    .section h2:after {
-      content: '';
-      width: 60%;
-      height: 4px;
-      background: #00f7ff;
-      position: absolute;
-      bottom: -12px;
-      left: 20%;
-      border-radius: 5px;
-    }
-    .card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-    }
-    .card {
-      flex: 1 1 200px;
-      min-width: 160px;
-      padding: 25px 15px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      transition: 0.3s;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .card i { font-size: 42px; margin-bottom: 12px; color: #00f7ff; }
-    .card h3 { margin-bottom: 8px; font-size: 20px; }
-    .card p { font-size: 14px; opacity: 0.8; }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 0 25px rgba(0, 247, 255, 0.4); background: rgba(255,255,255,0.1); }
-    .reveal { opacity: 0; transform: translateY(50px); transition: 0.8s ease; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-
-    /* Project Cards */
-    .project-card {
-      flex: 1 1 260px;
-      min-width: 250px;
-      padding: 22px;
-      background: rgba(0,0,0,0.45);
-      border-radius: 24px;
-      transition: 0.3s;
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(0,247,255,0.2);
-    }
-    .project-card:hover { transform: translateY(-6px); border-color: #00f7ff; background: rgba(0,0,0,0.6); }
-    .project-card i { font-size: 42px; margin-bottom: 15px; color: #8b5cf6; }
-    .project-card h3 { font-size: 22px; margin-bottom: 10px; }
-    .project-card p { font-size: 14px; line-height: 1.5; opacity: 0.9; }
-    .project-btn {
-      margin-top: 18px;
-      display: inline-block;
-      padding: 8px 22px;
-      background: rgba(0,247,255,0.15);
-      border-radius: 40px;
-      text-decoration: none;
-      color: white;
-      font-size: 14px;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-    .project-btn:hover { background: #00f7ff; color: #0f172a; }
-
-    /* Contact Links & Notify Section */
-    .contact-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 30px;
-    }
-    .contact-links a {
-      padding: 12px 22px;
-      border-radius: 50px;
-      text-decoration: none;
-      color: white;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      transition: 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      font-weight: 500;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-    @media (min-width: 480px) {
-      .contact-links a { padding: 14px 32px; font-size: 16px; }
-    }
-    .contact-links a i { font-size: 18px; }
-    .contact-links a:hover { transform: translateY(-4px); background: linear-gradient(90deg, #00f7ff, #8b5cf6); box-shadow: 0 0 18px rgba(0, 247, 255, 0.5); }
-
-    /* NEW: Notify Me Widget */
-    .notify-section {
-      max-width: 550px;
-      margin: 45px auto 20px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 28px;
-      padding: 28px 24px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(0,247,255,0.2);
-      transition: 0.3s;
-    }
-    .notify-section:hover {
-      border-color: #00f7ff;
-      box-shadow: 0 0 20px rgba(0,247,255,0.2);
-    }
-    .notify-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .notify-title i {
+    /* Admin Panel Button */
+    .admin-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 247, 255, 0.2);
       color: #00f7ff;
-      margin-right: 10px;
-    }
-    .notify-desc {
-      font-size: 14px;
-      opacity: 0.7;
-      margin-bottom: 20px;
-    }
-    .notify-form {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .notify-form input {
-      flex: 1;
-      min-width: 200px;
-      padding: 14px 18px;
-      border-radius: 50px;
-      border: none;
-      background: rgba(255,255,255,0.1);
-      color: white;
-      font-size: 14px;
-      outline: none;
-      transition: 0.3s;
-    }
-    .notify-form input:focus {
-      background: rgba(255,255,255,0.18);
       border: 1px solid #00f7ff;
-    }
-    .notify-form input::placeholder {
-      color: rgba(255,255,255,0.5);
-    }
-    .notify-btn {
-      padding: 14px 28px;
-      border-radius: 50px;
-      border: none;
-      background: linear-gradient(90deg, #00f7ff, #8b5cf6);
-      color: white;
-      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-size: 0.75rem;
       cursor: pointer;
-      transition: 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      z-index: 10001;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+      transition: 0.2s;
     }
-    .notify-btn:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 18px #00f7ff;
+
+    .admin-toggle:hover {
+      background: #00f7ff;
+      color: #0f172a;
     }
+
+    .admin-panel {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: rgba(15, 23, 42, 0.98);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 15px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      z-index: 10001;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 240px;
+      border: 1px solid rgba(0, 247, 255, 0.3);
+    }
+
+    .admin-panel.show {
+      display: flex;
+    }
+
+    .admin-panel button {
+      background: linear-gradient(90deg, #00f7ff, #8b5cf6);
+      color: #0f172a;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .admin-panel button.danger {
+      background: linear-gradient(90deg, #ff4d6d, #c9184a);
+      color: white;
+    }
+
+    .admin-panel input {
+      padding: 10px 14px;
+      border: 1px solid rgba(0, 247, 255, 0.3);
+      border-radius: 30px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .admin-panel input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .admin-panel small {
+      font-size: 10px;
+      color: #a0aec0;
+      text-align: center;
+    }
+
+    /* Toast Message */
     .toast-msg {
       position: fixed;
       bottom: 30px;
@@ -409,346 +284,251 @@
       padding: 12px 24px;
       border-radius: 50px;
       font-weight: 600;
-      z-index: 1100;
+      z-index: 11000;
       transition: 0.3s ease;
       opacity: 0;
       pointer-events: none;
       white-space: nowrap;
       font-size: 14px;
-      box-shadow: 0 0 20px rgba(0,247,255,0.5);
+      box-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
     }
+
     .toast-msg.show {
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
+
     @media (max-width: 550px) {
       .toast-msg { white-space: normal; text-align: center; width: 85%; font-size: 12px; }
-      .notify-section { margin: 35px 15px 20px; padding: 20px 18px; }
+      .maintenance-card { padding: 2rem 1.2rem; }
+      .maintenance-card h1 { font-size: 1.6rem; }
     }
 
-    .thanks-text {
-      margin-top: 35px;
-      font-size: clamp(14px, 4vw, 18px);
-      letter-spacing: 1px;
-      opacity: 0.85;
-    }
-
-    /* Floating particles background */
+    /* Particles background */
     .particle {
       position: fixed;
-      background: rgba(0,247,255,0.5);
+      background: rgba(0, 247, 255, 0.4);
       border-radius: 50%;
       pointer-events: none;
       z-index: 0;
       animation: floatParticle linear infinite;
     }
+
     @keyframes floatParticle {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 0.5; }
       100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
-    }
-
-    /* Photo Container */
-    .photo-container {
-      position: relative;
-      width: clamp(220px, 60vw, 300px);
-      height: clamp(220px, 60vw, 300px);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-    }
-    .photo-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      z-index: 2;
-      position: relative;
-      border: 3px solid #00f7ff;
-    }
-    .photo-container::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,247,255,0.4) 0%, rgba(139,92,246,0.3) 40%, transparent 70%);
-      filter: blur(25px);
-      z-index: 1;
-      animation: pulseGlow 4s ease-in-out infinite;
-    }
-    @keyframes pulseGlow {
-      0% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.08); }
-      100% { opacity: 0.6; transform: scale(1); }
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px 20px;
-      background: #0f172a;
-      border-top: 1px solid #1e293b;
-      font-size: 14px;
-    }
-    .scroll-top {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 48px;
-      height: 48px;
-      background: #00f7ff;
-      color: #0f172a;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: 0.3s;
-      z-index: 100;
-      box-shadow: 0 0 15px #00f7ff;
-      border: none;
-      font-size: 22px;
-    }
-    .scroll-top.show { opacity: 1; visibility: visible; }
-    .scroll-top:active { transform: scale(0.95); }
-    @media (hover: hover) { .scroll-top:hover { transform: scale(1.1); background: #8b5cf6; } }
-    .about-stats {
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .about-stats div {
-      background: rgba(255,255,255,0.05);
-      padding: 10px 20px;
-      border-radius: 40px;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-    @media (min-width: 768px) {
-      .about-stats div { font-size: 16px; padding: 12px 28px; }
     }
   </style>
 </head>
 <body>
 
-<div class="intro-screen">
-  <h1 class="intro-text"><span>✨ Animesh Mishra ✨</span></h1>
-  <p class="intro-sub">Code. Create. Captivate.</p>
-  <div class="intro-loader"></div>
+<!-- ========== MAINTENANCE MODE OVERLAY - USERS SEE THIS ========== -->
+<div id="maintenanceOverlay" class="maintenance-overlay">
+  <div class="maintenance-card">
+    <div class="maintenance-icon">
+      <i class="fas fa-tools"></i>
+    </div>
+    <h1>🔧 Under Maintenance</h1>
+    <h2>Animesh's Portfolio is getting a major upgrade!</h2>
+    <p>I'm working hard to bring you a stunning new experience with more projects, animations, and interactive features. The site will be back online shortly.</p>
+    
+    <div class="progress-bar-container">
+      <div class="progress-bar"></div>
+    </div>
+    
+    <div class="countdown-timer" id="countdownTimer">
+      ⏳ Estimated completion: updating...
+    </div>
+    
+    <div class="contact-info">
+      <p><i class="fas fa-envelope"></i> <strong>animeshmishra4123@gmail.com</strong></p>
+      <p><i class="fab fa-linkedin"></i> <strong>linkedin.com/in/animesh-mishra</strong></p>
+      <p><i class="fab fa-github"></i> <strong>github.com/Ani2025-git</strong></p>
+    </div>
+    
+    <button class="notify-btn" id="notifyMeBtn">
+      <i class="fas fa-bell"></i> Notify Me When Back
+    </button>
+    
+    <div class="social-links">
+      <a href="mailto:animeshmishra4123@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/animesh-mishra-665010294" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/Ani2025-git" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+  </div>
 </div>
 
-<nav>
-  <h2 class="logo">⚡ Animesh</h2>
-  <div class="menu-toggle"><i class="fas fa-bars"></i></div>
-  <ul class="nav-links">
-    <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
-    <li><a href="#skills"><i class="fas fa-code"></i> Skills</a></li>
-    <li><a href="#projects"><i class="fas fa-folder-open"></i> Projects</a></li>
-    <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-  </ul>
-</nav>
+<!-- Admin Panel (Hidden from normal users) -->
+<button class="admin-toggle" id="adminToggleBtn">🔧 Admin</button>
+<div class="admin-panel" id="adminPanel">
+  <input type="password" id="adminPassword" placeholder="Enter admin password">
+  <button id="enableMaintenanceBtn">🔴 Enable Maintenance Mode</button>
+  <button id="disableMaintenanceBtn" class="danger">🟢 Disable & Show Website</button>
+  <small>Default password: <strong>admin123</strong></small>
+</div>
 
-<section class="hero">
-  <div class="hero-left">
-    <h1>Hello, I'm <span>Animesh</span></h1>
-    <h3 class="typing"></h3>
-    <div class="social-icons-hero">
-      <a href="mailto:animeshmishra4123@gmail.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/animesh-mishra-665010294" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/Ani2025-git" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="photo-container">
-      <img src="profile.jpg" alt="Animesh Profile">
-    </div>
-  </div>
-</section>
-<section id="about" class="section reveal">
-  <h2>📖 About Me</h2>
-  <p style="max-width: 800px; margin: 0 auto; font-size: clamp(15px, 4vw, 18px); line-height: 1.7; padding: 0 10px;">I'm Animesh, a design-driven Frontend Developer who turns ideas into premium digital experiences. I build high-performance, responsive, and visually striking websites that blend creativity with precision. I love experimenting with modern UI trends and crafting interactive micro-animations that engage users.</p>
-  <div class="about-stats">
-    <div><i class="fas fa-map-marker-alt"></i> India</div>
-    <div><i class="fas fa-laptop-code"></i> 2+ Years Exp</div>
-    <div><i class="fas fa-award"></i> 15+ Projects</div>
-  </div>
-</section>
-
-<section id="skills" class="section reveal">
-  <h2>⚙️ Tech Arsenal</h2>
-  <div class="card-container">
-    <div class="card"><i class="fab fa-html5"></i><h3>HTML5</h3><p>Semantic & accessible</p></div>
-    <div class="card"><i class="fab fa-css3-alt"></i><h3>CSS3</h3><p>Flex/Grid, Animations</p></div>
-    <div class="card"><i class="fab fa-js"></i><h3>JavaScript</h3><p>ES6+, DOM Magic</p></div>
-    <div class="card"><i class="fab fa-react"></i><h3>React.js</h3><p>Hooks, Components</p></div>
-    <div class="card"><i class="fab fa-figma"></i><h3>Figma</h3><p>UI/UX Design</p></div>
-  </div>
-</section>
-
-<section id="projects" class="section reveal">
-  <h2>🚀 Featured Projects</h2>
-  <div class="card-container">
-    <div class="project-card"><i class="fas fa-globe"></i><h3>Portfolio 3.0</h3><p>Glassmorphism, particle bg, smooth interactions & fully responsive.</p><a href="#" class="project-btn">Live Demo →</a></div>
-    <div class="project-card"><i class="fas fa-store"></i><h3>E-Commerce UI</h3><p>Modern product grid, cart concept with local storage simulation.</p><a href="#" class="project-btn">Preview →</a></div>
-    <div class="project-card"><i class="fas fa-chart-line"></i><h3>Analytics Hub</h3><p>Interactive charts, dark mode, data visualization dashboard.</p><a href="#" class="project-btn">Explore →</a></div>
-    <div class="project-card"><i class="fas fa-gamepad"></i><h3>Memory Game</h3><p>Vanilla JS game with smooth animations & score tracking.</p><a href="#" class="project-btn">Play →</a></div>
-  </div>
-</section>
-
-<section id="contact" class="section reveal">
-  <h2>📬 Let's Connect</h2>
-  <div class="contact-links">
-    <a href="mailto:animeshmishra4123@gmail.com"><i class="fas fa-envelope"></i> animeshmishra4123</a>
-    <a href="https://www.linkedin.com/in/animesh-mishra-665010294" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-    <a href="https://github.com/Ani2025-git" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-    <a href="#" id="contactPhone"><i class="fas fa-phone-alt"></i> Call Me</a>
-  </div>
-
-  <!-- NEW: Notify Me Option -->
-  <div class="notify-section">
-    <div class="notify-title">
-      <i class="fas fa-bell"></i> Get Notified
-    </div>
-    <div class="notify-desc">
-      Subscribe to receive updates about new projects, tech articles, and exclusive portfolio launches.
-    </div>
-    <div class="notify-form">
-      <input type="email" id="notifyEmail" placeholder="Your best email address" autocomplete="email">
-      <button id="notifyBtn" class="notify-btn"><i class="fas fa-paper-plane"></i> Notify Me</button>
-    </div>
-    <div style="font-size: 12px; opacity: 0.6; margin-top: 15px;">✨ No spam, only quality updates. Unsubscribe anytime.</div>
-  </div>
-
-  <div class="thanks-text">
-    <i class="fas fa-heart" style="color:#ff4d6d;"></i> Thanks for visiting ✨ Let's build something amazing.
-  </div>
-</section>
-
-<footer>© 2026 Animesh Mishra | All Rights Reserved</footer>
-<div class="scroll-top" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></div>
+<!-- Toast Message -->
 <div id="toastMsg" class="toast-msg"></div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Intro fade
-  setTimeout(() => {
-    const intro = document.querySelector(".intro-screen");
-    intro.style.opacity = "0";
-    intro.style.transition = "opacity 1s ease";
-    setTimeout(() => { intro.style.display = "none"; }, 1000);
-  }, 2700);
-
-  // Typing
-  const textArray = ["Frontend Developer", "Creative Designer", "UI/UX Enthusiast", "Animation Lover"];
-  let index = 0, charIndex = 0, isDeleting = false;
-  const typingElement = document.querySelector(".typing");
-  function typeEffect() {
-    const currentText = textArray[index];
-    if (!isDeleting) {
-      typingElement.textContent = currentText.slice(0, charIndex++);
-      if (charIndex > currentText.length) { isDeleting = true; setTimeout(typeEffect, 1200); return; }
-    } else {
-      typingElement.textContent = currentText.slice(0, charIndex--);
-      if (charIndex === 0) { isDeleting = false; index = (index + 1) % textArray.length; }
-    }
-    setTimeout(typeEffect, isDeleting ? 40 : 100);
+  // ========== MAINTENANCE MODE CONTROL ==========
+  // By default, maintenance mode is ON - users see maintenance message
+  let isMaintenanceMode = localStorage.getItem("portfolioMaintenanceMode");
+  
+  // If never set before, set to true (show maintenance message)
+  if (isMaintenanceMode === null) {
+    isMaintenanceMode = true;
+    localStorage.setItem("portfolioMaintenanceMode", "true");
+  } else {
+    isMaintenanceMode = isMaintenanceMode === "true";
   }
-  typeEffect();
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll(".reveal");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("active"); });
-  }, { threshold: 0.1 });
-  reveals.forEach(reveal => observer.observe(reveal));
-
-  // Mobile menu
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navLinks = document.querySelector('.nav-links');
-  menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-  document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
-
-  // Scroll to top
-  const scrollBtn = document.getElementById('scrollTopBtn');
-  window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 400); });
-  scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  // Particles
+  
+  const maintenanceOverlay = document.getElementById("maintenanceOverlay");
+  let countdownInterval = null;
+  
+  // Show/Hide maintenance overlay
+  function setMaintenanceMode(enable) {
+    isMaintenanceMode = enable;
+    localStorage.setItem("portfolioMaintenanceMode", enable ? "true" : "false");
+    
+    if (enable) {
+      maintenanceOverlay.classList.remove("hide");
+      startCountdown();
+      showToastMessage("🔧 Maintenance mode ENABLED - Users see maintenance page");
+    } else {
+      maintenanceOverlay.classList.add("hide");
+      showToastMessage("🟢 Maintenance mode DISABLED - Website is live!");
+    }
+  }
+  
+  // Countdown timer for maintenance (cosmetic)
+  function startCountdown() {
+    if (countdownInterval) clearInterval(countdownInterval);
+    
+    let seconds = 5400; // 1.5 hours countdown
+    const timerElement = document.getElementById("countdownTimer");
+    
+    countdownInterval = setInterval(() => {
+      if (!isMaintenanceMode) {
+        clearInterval(countdownInterval);
+        return;
+      }
+      
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      
+      timerElement.innerHTML = `⏳ Estimated completion: ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+      
+      if (seconds <= 0) {
+        clearInterval(countdownInterval);
+        timerElement.innerHTML = "🎉 Almost ready! Coming back online shortly...";
+        setTimeout(() => {
+          if (isMaintenanceMode) {
+            setMaintenanceMode(false);
+          }
+        }, 3000);
+      }
+      seconds--;
+    }, 1000);
+  }
+  
+  // Toast message function
+  function showToastMessage(message, isError = false) {
+    const toast = document.getElementById("toastMsg");
+    toast.textContent = message;
+    toast.style.background = isError ? 'linear-gradient(135deg, #ff4d6d, #c9184a)' : 'linear-gradient(135deg, #00f7ff, #8b5cf6)';
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+  }
+  
+  // ========== ADMIN PANEL CONTROLS ==========
+  const adminToggle = document.getElementById("adminToggleBtn");
+  const adminPanel = document.getElementById("adminPanel");
+  
+  adminToggle.addEventListener("click", () => {
+    adminPanel.classList.toggle("show");
+  });
+  
+  // Enable Maintenance Mode
+  document.getElementById("enableMaintenanceBtn").addEventListener("click", () => {
+    const password = document.getElementById("adminPassword").value;
+    if (password === "admin123") {
+      setMaintenanceMode(true);
+      adminPanel.classList.remove("show");
+      document.getElementById("adminPassword").value = "";
+    } else {
+      alert("❌ Wrong password! Access denied.");
+    }
+  });
+  
+  // Disable Maintenance Mode (Show Website)
+  document.getElementById("disableMaintenanceBtn").addEventListener("click", () => {
+    const password = document.getElementById("adminPassword").value;
+    if (password === "admin123") {
+      setMaintenanceMode(false);
+      adminPanel.classList.remove("show");
+      document.getElementById("adminPassword").value = "";
+    } else {
+      alert("❌ Wrong password! Access denied.");
+    }
+  });
+  
+  // ========== NOTIFY ME BUTTON ==========
+  document.getElementById("notifyMeBtn").addEventListener("click", () => {
+    const email = prompt("Enter your email address to get notified when the portfolio is back:", "your@email.com");
+    if (email && email.includes("@") && email.includes(".")) {
+      let notifyList = JSON.parse(localStorage.getItem("notifyEmails") || "[]");
+      if (!notifyList.includes(email)) {
+        notifyList.push(email);
+        localStorage.setItem("notifyEmails", JSON.stringify(notifyList));
+        showToastMessage(`✅ Thanks ${email.split('@')[0]}! I'll notify you when the site is live.`);
+      } else {
+        showToastMessage("📧 You're already on the notification list!");
+      }
+    } else if (email) {
+      alert("Please enter a valid email address.");
+    }
+  });
+  
+  // ========== CLICK OUTSIDE ADMIN PANEL ==========
+  document.addEventListener("click", (event) => {
+    if (!adminToggle.contains(event.target) && !adminPanel.contains(event.target)) {
+      adminPanel.classList.remove("show");
+    }
+  });
+  
+  // ========== CREATE PARTICLES BACKGROUND ==========
   function createParticles() {
-    const count = window.innerWidth < 768 ? 45 : 80;
+    const count = window.innerWidth < 768 ? 40 : 70;
     for (let i = 0; i < count; i++) {
       const p = document.createElement('div');
       p.classList.add('particle');
-      const size = Math.random() * 5 + 2;
-      p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+7}s;animation-delay:${Math.random()*8}s;opacity:${Math.random()*0.5+0.2};background:radial-gradient(circle,#00f7ff,#8b5cf6)`;
+      const size = Math.random() * 4 + 2;
+      p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*8}s;opacity:${Math.random()*0.5+0.2};background:radial-gradient(circle,#00f7ff,#8b5cf6)`;
       document.body.appendChild(p);
     }
   }
   createParticles();
-
-  // Alert helpers
-  const showToast = (message, isError = false) => {
-    const toast = document.getElementById('toastMsg');
-    toast.textContent = message;
-    toast.style.background = isError ? 'linear-gradient(135deg, #ff4d6d, #c9184a)' : 'linear-gradient(135deg, #00f7ff, #8b5cf6)';
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-  };
-
-  // Resume & Phone alerts
-  document.getElementById('resumeBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("✨ Resume: Animesh Mishra - Frontend Developer. PDF available on request!"); });
-  document.getElementById('contactPhone')?.addEventListener('click', (e) => { e.preventDefault(); showToast("📞 +91 7029849318 — Let's connect over a quick chat!"); });
-  document.querySelectorAll('.project-btn').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); const name = btn.closest('.project-card')?.querySelector('h3')?.innerText || 'Project'; showToast(`✨ "${name}" — Live demo coming soon! Stay tuned.`); }));
-
-  // NEW: Notify Me subscription logic with validation & localStorage simulation
-  const notifyBtn = document.getElementById('notifyBtn');
-  const notifyEmail = document.getElementById('notifyEmail');
   
-  // Load stored emails demo (just for simulation)
-  let subscribedEmails = JSON.parse(localStorage.getItem('notifyEmails') || '[]');
+  // ========== INITIALIZE ==========
+  if (isMaintenanceMode) {
+    maintenanceOverlay.classList.remove("hide");
+    startCountdown();
+  } else {
+    maintenanceOverlay.classList.add("hide");
+  }
   
-  notifyBtn.addEventListener('click', () => {
-    const email = notifyEmail.value.trim();
-    if (!email) {
-      showToast("⚠️ Please enter your email address.", true);
-      return;
-    }
-    const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
-    if (!emailRegex.test(email)) {
-      showToast("❌ Invalid email format. Try again!", true);
-      return;
-    }
-    if (subscribedEmails.includes(email)) {
-      showToast("📧 You're already subscribed! We'll keep you posted.");
-      notifyEmail.value = '';
-      return;
-    }
-    subscribedEmails.push(email);
-    localStorage.setItem('notifyEmails', JSON.stringify(subscribedEmails));
-    showToast(`🎉 Thanks ${email.split('@')[0]}! You'll receive updates on new projects. ✨`);
-    notifyEmail.value = '';
-    
-    // Optional: animate bell
-    const bellIcon = document.querySelector('.notify-title i');
-    if (bellIcon) {
-      bellIcon.style.transform = 'rotate(15deg)';
-      setTimeout(() => { bellIcon.style.transform = 'rotate(0deg)'; }, 300);
-    }
-  });
-
-  // Nav background scroll effect
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    nav.style.background = window.scrollY > 50 ? 'rgba(0, 0, 0, 0.85)' : 'rgba(0, 0, 0, 0.6)';
-  });
-});
+  // Console log for admin
+  console.log("Portfolio Maintenance Mode:", isMaintenanceMode ? "ON - Users see maintenance page" : "OFF - Website is live");
+  console.log("To disable maintenance mode, click the Admin button (bottom right) and use password: admin123");
 </script>
+
+<!-- Original website content (only visible when maintenance is OFF) -->
+<div id="websiteContent" style="display: none;">
+  <!-- This content is hidden when maintenance mode is ON -->
+</div>
+
 </body>
 </html>
+```
