@@ -1,2368 +1,755 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Animesh Mishra | Ultra-Premium Portfolio 4.0</title>
-  
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Portfolio of Animesh Mishra - Frontend Engineer & UI/UX Specialist crafting high-performance, responsive & visually stunning web applications like FlipQuiz, MediLife Pharmacy, and more.">
-  <meta name="author" content="Animesh Mishra">
-  <meta name="theme-color" content="#070913">
-  
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animesh Mishra — Frontend Developer & UI Engineer</title>
+  <meta name="description" content="Portfolio of Animesh Mishra, Frontend Developer & UI Engineer based in India. Specializing in modern JavaScript, React.js, and high-performance, accessible web applications.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Google Fonts: Raleway (Headings) & Inter (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Raleway:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
-  <style>
-    /* ==========================================================================
-       DESIGN SYSTEM & CSS TOKENS
-       ========================================================================== */
-    :root {
-      --bg-dark: #070913;
-      --bg-dark-secondary: #0c1021;
-      --bg-card: rgba(15, 23, 42, 0.65);
-      --bg-card-hover: rgba(26, 38, 66, 0.8);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-border-hover: rgba(0, 247, 255, 0.35);
-      
-      --accent-cyan: #00f7ff;
-      --accent-violet: #8b5cf6;
-      --accent-pink: #ec4899;
-      --accent-amber: #f59e0b;
-      --accent-emerald: #10b981;
-      
-      --gradient-primary: linear-gradient(135deg, #00f7ff, #8b5cf6, #ec4899);
-      --gradient-subtle: linear-gradient(135deg, rgba(0,247,255,0.15), rgba(139,92,246,0.15));
-      --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-      
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 24px;
-      --radius-full: 9999px;
-      
-      --shadow-glow-cyan: 0 0 30px rgba(0, 247, 255, 0.25);
-      --shadow-glow-violet: 0 0 30px rgba(139, 92, 246, 0.25);
-      --shadow-card: 0 10px 30px -10px rgba(0,0,0,0.5);
-      
-      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    ::selection {
-      background: var(--accent-cyan);
-      color: var(--bg-dark);
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-dark);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(139, 92, 246, 0.4);
-      border-radius: var(--radius-full);
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-cyan);
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
-    }
-
-    /* Ambient Background Glows */
-    .ambient-glow {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.35;
-      animation: ambientPulse 12s ease-in-out infinite alternate;
-    }
-    .glow-1 {
-      top: -10%;
-      left: -10%;
-      width: 50vw;
-      height: 50vw;
-      background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
-    }
-    .glow-2 {
-      bottom: 10%;
-      right: -10%;
-      width: 45vw;
-      height: 45vw;
-      background: radial-gradient(circle, #00f7ff 0%, transparent 70%);
-    }
-    .glow-3 {
-      top: 40%;
-      left: 30%;
-      width: 35vw;
-      height: 35vw;
-      background: radial-gradient(circle, #ec4899 0%, transparent 70%);
-      opacity: 0.2;
-    }
-
-    @keyframes ambientPulse {
-      0% { transform: scale(1) translate(0, 0); }
-      100% { transform: scale(1.15) translate(30px, -20px); }
-    }
-
-    /* Canvas particle overlay */
-    #particleCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Scroll Reading Progress Bar */
-    .scroll-progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 3px;
-      background: var(--gradient-primary);
-      z-index: 9999;
-      width: 0%;
-      transition: width 0.1s linear;
-      box-shadow: 0 0 10px var(--accent-cyan);
-    }
-
-    /* Introductory Screen */
-    .intro-screen {
-      position: fixed;
-      inset: 0;
-      background: var(--bg-dark);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      gap: 16px;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
-    .intro-title {
-      font-size: clamp(28px, 6vw, 54px);
-      font-weight: 800;
-      letter-spacing: -1px;
-      background: var(--gradient-primary);
-      background-size: 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 4s linear infinite;
-    }
-    .intro-subtitle {
-      color: var(--text-muted);
-      font-size: clamp(14px, 3vw, 18px);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-    .intro-spinner {
-      width: 48px;
-      height: 48px;
-      border: 3px solid rgba(0, 247, 255, 0.15);
-      border-top: 3px solid var(--accent-cyan);
-      border-right: 3px solid var(--accent-violet);
-      border-radius: 50%;
-      animation: spin 1s infinite linear;
-      margin-top: 15px;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes gradientShift { 0% { background-position: 0%; } 100% { background-position: 200%; } }
-
-    /* ==========================================================================
-       NAVIGATION BAR
-       ========================================================================== */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 18px 5%;
-      transition: var(--transition-smooth);
-    }
-    header.scrolled {
-      padding: 12px 5%;
-      background: rgba(7, 9, 19, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--glass-border);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    nav {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--text-main);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      letter-spacing: -0.5px;
-    }
-    .logo span {
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .logo-badge {
-      font-size: 10px;
-      background: rgba(0, 247, 255, 0.12);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(0, 247, 255, 0.3);
-      padding: 2px 8px;
-      border-radius: var(--radius-full);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .nav-menu {
-      display: flex;
-      list-style: none;
-      gap: 32px;
-      align-items: center;
-    }
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-muted);
-      font-weight: 500;
-      font-size: 15px;
-      transition: var(--transition-fast);
-      position: relative;
-      padding: 4px 0;
-    }
-    .nav-link:hover, .nav-link.active {
-      color: var(--text-main);
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: var(--gradient-primary);
-      border-radius: 2px;
-      transition: var(--transition-fast);
-    }
-    .nav-link:hover::after, .nav-link.active::after {
-      width: 100%;
-    }
-
-    .nav-cta {
-      padding: 9px 20px;
-      background: var(--gradient-subtle);
-      border: 1px solid var(--glass-border-hover);
-      border-radius: var(--radius-full);
-      color: var(--accent-cyan);
-      font-weight: 600;
-      font-size: 14px;
-      text-decoration: none;
-      transition: var(--transition-fast);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .nav-cta:hover {
-      background: var(--accent-cyan);
-      color: var(--bg-dark);
-      box-shadow: var(--shadow-glow-cyan);
-      transform: translateY(-2px);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--glass-border);
-      color: var(--text-main);
-      width: 44px;
-      height: 44px;
-      border-radius: var(--radius-md);
-      font-size: 20px;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition-fast);
-      z-index: 1002;
-    }
-    .mobile-menu-btn:hover {
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
-      box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
-      transform: scale(1.05);
-    }
-
-    /* Mobile Nav Overlay Backdrop */
-    .nav-overlay-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(7, 9, 19, 0.7);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .nav-overlay-backdrop.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* Mobile Nav Overlay Drawer */
-    @media (max-width: 900px) {
-      .mobile-menu-btn { display: flex; }
-      .nav-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 82%;
-        max-width: 360px;
-        height: 100vh;
-        background: rgba(12, 16, 33, 0.98);
-        backdrop-filter: blur(24px);
-        border-left: 1px solid var(--glass-border-hover);
-        box-shadow: -10px 0 40px rgba(0,0,0,0.8);
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 40px 32px;
-        gap: 28px;
-        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: 1001;
-      }
-      .nav-menu.active { right: 0; }
-      .nav-link { font-size: 20px; width: 100%; }
-    }
-
-    /* ==========================================================================
-       HERO SECTION
-       ========================================================================== */
-    .hero-section {
-      min-height: 100vh;
-      padding: 140px 5% 80px;
-      max-width: 1280px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      align-items: center;
-      gap: 60px;
-      position: relative;
-      z-index: 2;
-    }
-    @media (max-width: 992px) {
-      .hero-section {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding-top: 120px;
-        gap: 40px;
-      }
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 18px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: var(--radius-full);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--accent-emerald);
-      margin-bottom: 24px;
-    }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent-emerald);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent-emerald);
-      animation: pulseGreen 2s infinite;
-    }
-    @keyframes pulseGreen { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
-
-    .hero-title {
-      font-size: clamp(38px, 6.5vw, 64px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1.5px;
-      margin-bottom: 16px;
-    }
-    .hero-title .gradient-text {
-      background: var(--gradient-primary);
-      background-size: 200%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 6s ease infinite alternate;
-    }
-
-    .hero-subtitle-container {
-      font-size: clamp(20px, 4vw, 28px);
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-      min-height: 42px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    @media (max-width: 992px) {
-      .hero-subtitle-container { justify-content: center; }
-    }
-    .typing-text {
-      color: var(--accent-cyan);
-      border-right: 2px solid var(--accent-cyan);
-      padding-right: 4px;
-      animation: blink 0.75s step-end infinite;
-    }
-    @keyframes blink { 50% { border-color: transparent; } }
-
-    .hero-description {
-      font-size: clamp(15px, 2vw, 17px);
-      color: var(--text-muted);
-      line-height: 1.7;
-      max-width: 580px;
-      margin-bottom: 36px;
-    }
-    @media (max-width: 992px) {
-      .hero-description { margin: 0 auto 36px; }
-    }
-
-    .hero-cta-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-    @media (max-width: 992px) {
-      .hero-cta-group { justify-content: center; }
-    }
-
-    .btn {
-      padding: 14px 32px;
-      border-radius: var(--radius-full);
-      font-weight: 600;
-      font-size: 15px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: var(--transition-fast);
-      cursor: pointer;
-      border: none;
-    }
-    .btn-primary {
-      background: var(--gradient-primary);
-      color: var(--bg-dark);
-      box-shadow: 0 4px 20px rgba(0, 247, 255, 0.3);
-    }
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0, 247, 255, 0.5);
-    }
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--glass-border);
-      color: var(--text-main);
-      backdrop-filter: blur(10px);
-    }
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
-      transform: translateY(-3px);
-    }
-
-    .hero-socials {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-    @media (max-width: 992px) {
-      .hero-socials { justify-content: center; }
-    }
-    .social-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--glass-border);
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      text-decoration: none;
-      transition: var(--transition-fast);
-    }
-    .social-icon:hover {
-      color: var(--accent-cyan);
-      border-color: var(--accent-cyan);
-      background: rgba(0, 247, 255, 0.1);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-glow-cyan);
-    }
-
-    /* 3D Profile Avatar Card */
-    .hero-avatar-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-    .avatar-card {
-      position: relative;
-      width: clamp(260px, 32vw, 340px);
-      height: clamp(260px, 32vw, 340px);
-      border-radius: var(--radius-lg);
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      padding: 12px;
-      backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-card);
-      transition: transform 0.3s ease, border-color 0.3s ease;
-      cursor: pointer;
-    }
-    .avatar-card:hover {
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 40px rgba(0, 247, 255, 0.25);
-    }
-    .avatar-img-box {
-      width: 100%;
-      height: 100%;
-      border-radius: calc(var(--radius-lg) - 6px);
-      overflow: hidden;
-      position: relative;
-      background: linear-gradient(135deg, #1e1b4b, #0f172a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .avatar-img-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .avatar-card:hover img {
-      transform: scale(1.06);
-    }
-    .avatar-placeholder-icon {
-      font-size: 90px;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .avatar-glow-ring {
-      position: absolute;
-      inset: -15px;
-      border-radius: calc(var(--radius-lg) + 10px);
-      background: var(--gradient-primary);
-      z-index: -1;
-      filter: blur(20px);
-      opacity: 0.4;
-      transition: opacity 0.3s ease;
-    }
-    .avatar-card:hover .avatar-glow-ring {
-      opacity: 0.75;
-    }
-
-    /* Floating Tech Badges on Avatar */
-    .floating-badge {
-      position: absolute;
-      padding: 10px 16px;
-      background: rgba(12, 16, 33, 0.85);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-full);
-      backdrop-filter: blur(12px);
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      z-index: 10;
-      animation: floatMotion 5s ease-in-out infinite alternate;
-    }
-    .badge-top-right {
-      top: -15px;
-      right: -20px;
-      animation-delay: 0s;
-    }
-    .badge-bottom-left {
-      bottom: -15px;
-      left: -20px;
-      animation-delay: 2.5s;
-    }
-    @keyframes floatMotion {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-12px); }
-    }
-
-    /* ==========================================================================
-       GLOBAL SECTION STYLING
-       ========================================================================== */
-    .section-padding {
-      padding: 100px 5%;
-      max-width: 1280px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-    .section-header {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-    .section-tag {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      color: var(--accent-cyan);
-      margin-bottom: 12px;
-      display: block;
-    }
-    .section-title {
-      font-size: clamp(30px, 5vw, 44px);
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-    }
-    .section-subtitle {
-      color: var(--text-muted);
-      font-size: clamp(15px, 2vw, 17px);
-      max-width: 620px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* Scroll Reveal Animation Classes */
-    .reveal-up {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal-up.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ==========================================================================
-       ABOUT & METRICS SECTION
-       ========================================================================== */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-      align-items: center;
-    }
-    @media (max-width: 900px) {
-      .about-grid { grid-template-columns: 1fr; }
-    }
-
-    .about-text-box p {
-      color: var(--text-muted);
-      font-size: 16px;
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-    .about-highlight {
-      color: var(--accent-cyan);
-      font-weight: 600;
-    }
-
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    .metric-card {
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      padding: 26px 20px;
-      border-radius: var(--radius-lg);
-      backdrop-filter: blur(12px);
-      text-align: center;
-      transition: var(--transition-fast);
-    }
-    .metric-card:hover {
-      border-color: var(--glass-border-hover);
-      transform: translateY(-5px);
-      background: var(--bg-card-hover);
-    }
-    .metric-number {
-      font-size: clamp(32px, 4vw, 42px);
-      font-weight: 800;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
-    }
-    .metric-label {
-      font-size: 14px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* ==========================================================================
-       TECH ARSENAL (SKILLS)
-       ========================================================================== */
-    .skills-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 28px;
-    }
-    .skill-category-card {
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 32px 28px;
-      backdrop-filter: blur(16px);
-      transition: var(--transition-smooth);
-    }
-    .skill-category-card:hover {
-      border-color: var(--accent-violet);
-      box-shadow: var(--shadow-glow-violet);
-      transform: translateY(-4px);
-    }
-    .skill-category-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .skill-category-title i {
-      color: var(--accent-cyan);
-    }
-
-    .skill-item {
-      margin-bottom: 20px;
-    }
-    .skill-item:last-child { margin-bottom: 0; }
-    .skill-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .skill-bar-bg {
-      width: 100%;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-full);
-      overflow: hidden;
-    }
-    .skill-bar-fill {
-      height: 100%;
-      background: var(--gradient-primary);
-      border-radius: var(--radius-full);
-      width: 0%;
-      transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1);
-    }
-
-    /* ==========================================================================
-       FEATURED PROJECTS & FILTERING
-       ========================================================================== */
-    .project-filters {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 40px;
-    }
-    .filter-btn {
-      padding: 10px 24px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-full);
-      color: var(--text-muted);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
-    .filter-btn:hover, .filter-btn.active {
-      background: var(--accent-cyan);
-      color: var(--bg-dark);
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 18px rgba(0, 247, 255, 0.3);
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 30px;
-    }
-    @media (max-width: 768px) {
-      .projects-grid { grid-template-columns: 1fr; }
-    }
-
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      backdrop-filter: blur(16px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: var(--transition-smooth);
-      position: relative;
-      overflow: hidden;
-    }
-    .project-card.featured-project {
-      border: 1px solid rgba(0, 247, 255, 0.4);
-      box-shadow: 0 0 25px rgba(0, 247, 255, 0.15);
-    }
-    .project-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--accent-cyan);
-      box-shadow: var(--shadow-glow-cyan);
-      background: var(--bg-card-hover);
-    }
-
-    .project-top-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .project-icon-wrapper {
-      width: 52px;
-      height: 52px;
-      border-radius: var(--radius-md);
-      background: var(--gradient-subtle);
-      border: 1px solid var(--glass-border-hover);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: var(--accent-cyan);
-    }
-    .project-badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: var(--radius-full);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .badge-live {
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--accent-emerald);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-    .badge-featured {
-      background: rgba(0, 247, 255, 0.15);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(0, 247, 255, 0.4);
-    }
-    .badge-soon {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--accent-amber);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .project-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text-main);
-    }
-    .project-desc {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 22px;
-      flex-grow: 1;
-    }
-
-    .project-tech-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
-    .tech-tag {
-      font-size: 12px;
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: var(--radius-sm);
-      color: var(--text-muted);
-      border: 1px solid var(--glass-border);
-    }
-
-    .project-actions {
-      display: flex;
-      gap: 12px;
-    }
-    .btn-project {
-      flex: 1;
-      padding: 10px 16px;
-      border-radius: var(--radius-full);
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      text-align: center;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: var(--transition-fast);
-      cursor: pointer;
-      border: none;
-    }
-    .btn-project-live {
-      background: var(--accent-cyan);
-      color: var(--bg-dark);
-    }
-    .btn-project-live:hover {
-      box-shadow: var(--shadow-glow-cyan);
-      transform: scale(1.02);
-    }
-    .btn-project-details {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--glass-border);
-      color: var(--text-main);
-    }
-    .btn-project-details:hover {
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
-    }
-
-    /* ==========================================================================
-       ROADMAP & CAREER TIMELINE (NEW)
-       ========================================================================== */
-    .timeline-container {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px 0;
-    }
-    /* Central Line */
-    .timeline-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 3px;
-      background: linear-gradient(180deg, var(--accent-cyan), var(--accent-violet), var(--accent-pink));
-      transform: translateX(-50%);
-      border-radius: var(--radius-full);
-    }
-    @media (max-width: 768px) {
-      .timeline-container::before {
-        left: 24px;
-      }
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: 50px;
-      width: 50%;
-      padding: 0 40px;
-    }
-    .timeline-item:nth-child(odd) {
-      left: 0;
-      text-align: right;
-    }
-    .timeline-item:nth-child(even) {
-      left: 50%;
-      text-align: left;
-    }
-    @media (max-width: 768px) {
-      .timeline-item {
-        width: 100%;
-        left: 0 !important;
-        padding-left: 60px;
-        padding-right: 0;
-        text-align: left !important;
-      }
-    }
-
-    .timeline-node {
-      position: absolute;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--bg-dark);
-      border: 3px solid var(--accent-cyan);
-      box-shadow: 0 0 15px var(--accent-cyan);
-      z-index: 5;
-    }
-    .timeline-item:nth-child(odd) .timeline-node { right: -10px; }
-    .timeline-item:nth-child(even) .timeline-node { left: -10px; }
-    @media (max-width: 768px) {
-      .timeline-node { left: 15px !important; }
-    }
-
-    .timeline-content {
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      backdrop-filter: blur(14px);
-      transition: var(--transition-smooth);
-    }
-    .timeline-content:hover {
-      border-color: var(--accent-cyan);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-glow-cyan);
-    }
-
-    .timeline-date {
-      display: inline-block;
-      padding: 4px 12px;
-      background: var(--gradient-subtle);
-      border: 1px solid var(--glass-border-hover);
-      border-radius: var(--radius-full);
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      margin-bottom: 12px;
-    }
-    .timeline-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--text-main);
-    }
-    .timeline-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* ==========================================================================
-       CONTACT & NOTIFY SECTION
-       ========================================================================== */
-    .contact-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: start;
-    }
-    @media (max-width: 900px) {
-      .contact-wrapper { grid-template-columns: 1fr; }
-    }
-
-    .contact-card {
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 36px;
-      backdrop-filter: blur(16px);
-    }
-
-    .contact-links-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .contact-link-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 20px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-md);
-      color: var(--text-main);
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 600;
-      transition: var(--transition-fast);
-      cursor: pointer;
-    }
-    .contact-link-item i {
-      font-size: 20px;
-      color: var(--accent-cyan);
-      width: 24px;
-    }
-    .contact-link-item:hover {
-      background: rgba(0, 247, 255, 0.1);
-      border-color: var(--accent-cyan);
-      transform: translateX(6px);
-    }
-
-    /* Subscription Box */
-    .notify-box {
-      background: var(--gradient-card);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 36px;
-      backdrop-filter: blur(16px);
-      text-align: center;
-    }
-    .notify-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: var(--gradient-subtle);
-      border: 1px solid var(--glass-border-hover);
-      color: var(--accent-cyan);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin: 0 auto 20px;
-    }
-    .notify-form {
-      display: flex;
-      gap: 10px;
-      margin-top: 24px;
-      flex-wrap: wrap;
-    }
-    .notify-input {
-      flex: 1;
-      min-width: 220px;
-      padding: 14px 20px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-full);
-      color: var(--text-main);
-      font-size: 14px;
-      outline: none;
-      transition: var(--transition-fast);
-    }
-    .notify-input:focus {
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 15px rgba(0, 247, 255, 0.2);
-    }
-
-    /* ==========================================================================
-       MODAL POPUP (PROJECT QUICK-VIEW)
-       ========================================================================== */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(7, 9, 19, 0.85);
-      backdrop-filter: blur(16px);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .modal-backdrop.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    .modal-box {
-      background: var(--bg-dark-secondary);
-      border: 1px solid var(--glass-border-hover);
-      border-radius: var(--radius-lg);
-      max-width: 600px;
-      width: 100%;
-      padding: 32px;
-      position: relative;
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-    }
-    .modal-backdrop.active .modal-box {
-      transform: scale(1);
-    }
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      border: none;
-      color: var(--text-muted);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 16px;
-      transition: var(--transition-fast);
-    }
-    .modal-close:hover {
-      background: rgba(239, 68, 68, 0.2);
-      color: #ef4444;
-    }
-    .modal-features-list {
-      list-style: none;
-      margin: 20px 0;
-    }
-    .modal-features-list li {
-      margin-bottom: 10px;
-      font-size: 14px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    /* Resume Modal Styles */
-    .resume-modal-box {
-      max-width: 800px;
-      width: 92%;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .resume-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--glass-border);
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    .resume-pdf-container {
-      width: 100%;
-      height: 520px;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--glass-border-hover);
-      background: rgba(12, 16, 33, 0.9);
-      margin: 14px 0;
-    }
-    .resume-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .resume-section {
-      margin-bottom: 20px;
-    }
-    .resume-section h4 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .resume-section p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .resume-item {
-      margin-bottom: 10px;
-      padding-left: 12px;
-      border-left: 2px solid var(--glass-border-hover);
-    }
-    .resume-item-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-    .resume-item-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 2px;
-      line-height: 1.5;
-    }
-    .resume-skills-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .resume-skills-tags span {
-      padding: 4px 12px;
-      background: rgba(0, 247, 255, 0.1);
-      border: 1px solid rgba(0, 247, 255, 0.25);
-      border-radius: var(--radius-full);
-      font-size: 12px;
-      color: var(--accent-cyan);
-      font-weight: 600;
-    }
-    .resume-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid var(--glass-border);
-      flex-wrap: wrap;
-    }
-
-    /* ==========================================================================
-       TOAST NOTIFICATION SYSTEM
-       ========================================================================== */
-    .toast-container {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: var(--bg-card);
-      border: 1px solid var(--accent-cyan);
-      padding: 14px 28px;
-      border-radius: var(--radius-full);
-      color: var(--text-main);
-      font-weight: 600;
-      font-size: 14px;
-      z-index: 10001;
-      box-shadow: var(--shadow-glow-cyan);
-      backdrop-filter: blur(16px);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-      opacity: 0;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .toast-container.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    /* Scroll To Top Button */
-    .scroll-top-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--gradient-primary);
-      color: var(--bg-dark);
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition-smooth);
-      z-index: 999;
-      box-shadow: 0 0 20px rgba(0, 247, 255, 0.4);
-    }
-    .scroll-top-btn.show {
-      opacity: 1;
-      visibility: visible;
-    }
-    .scroll-top-btn:hover {
-      transform: translateY(-4px) scale(1.08);
-    }
-
-    footer {
-      border-top: 1px solid var(--glass-border);
-      padding: 30px 5%;
-      text-align: center;
-      color: var(--text-dim);
-      font-size: 14px;
-      background: var(--bg-dark-secondary);
-      position: relative;
-      z-index: 2;
-    }
-  </style>
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Scroll Reading Progress Bar -->
-  <div class="scroll-progress-bar" id="scrollProgress"></div>
-
-  <!-- Ambient Glow Backgrounds -->
-  <div class="ambient-glow glow-1"></div>
-  <div class="ambient-glow glow-2"></div>
-  <div class="ambient-glow glow-3"></div>
-
-  <!-- Canvas Particle Constellation -->
-  <canvas id="particleCanvas"></canvas>
-
-  <!-- Introductory Loader Screen -->
-  <div class="intro-screen" id="introScreen">
-    <h1 class="intro-title">Animesh Mishra</h1>
-    <p class="intro-subtitle">Code • Create • Captivate</p>
-    <div class="intro-spinner"></div>
+  <!-- Subtle Architectural Canvas Lines (Unfold Signature) -->
+  <div class="unfold-lines-canvas" aria-hidden="true">
+    <div class="unfold-vertical-line"></div>
+    <div class="unfold-vertical-line"></div>
+    <div class="unfold-vertical-line"></div>
+    <div class="unfold-vertical-line"></div>
   </div>
 
-  <!-- NAVIGATION -->
-  <div class="nav-overlay-backdrop" id="navOverlay"></div>
-  <header id="header">
-    <nav>
-      <a href="#" class="logo">
-        <i class="fas fa-bolt" style="color: var(--accent-cyan);"></i>
-        <span>Animesh</span>
-        <span class="logo-badge">4.0</span>
-      </a>
-
-      <ul class="nav-menu" id="navMenu">
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-        <li><a href="#contact" class="nav-cta"><i class="fas fa-paper-plane"></i> Let's Talk</a></li>
+  <!-- ==========================================================================
+       HEADER — EXACT UNFOLD DEAD-CENTERED SPLIT NAVIGATION
+       ========================================================================== -->
+  <header class="unfold-header" id="unfoldHeader">
+    <div class="unfold-nav-grid">
+      <!-- 1. Left Navigation Links -->
+      <ul class="nav-col-left">
+        <li><a href="#hero" class="unfold-link active">Home</a></li>
+        <li><a href="#portfolio" class="unfold-link">Portfolio</a></li>
+        <li><a href="#about" class="unfold-link">About</a></li>
+        <li><a href="#experience" class="unfold-link">Experience</a></li>
       </ul>
 
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
-        <i class="fas fa-bars" id="menuToggleIcon"></i>
-      </button>
-    </nav>
+      <!-- 2. Dead-Center Logo (Signature Unfold Style) -->
+      <div class="nav-col-center">
+        <a href="#hero" class="unfold-center-logo" aria-label="Animesh Mishra Home">
+          Ani<span class="logo-dot">.</span>
+        </a>
+      </div>
+
+      <!-- 3. Right Navigation Column -->
+      <div class="nav-col-right-wrap">
+        <ul class="nav-col-right">
+          <li><a href="#services" class="unfold-link">Services</a></li>
+          <li><a href="#skills" class="unfold-link">Skills</a></li>
+          <li><a href="#contact" class="unfold-link">Contact</a></li>
+          <li><a href="javascript:void(0)" onclick="openModal('cvModal')" class="unfold-link">Resume</a></li>
+        </ul>
+      </div>
+
+      <!-- 4. Mobile Header Tools (Displayed ONLY on <= 991px screens) -->
+      <div class="mobile-header-tools">
+        <button class="mobile-menu-trigger" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation Menu -->
+    <div class="mobile-dropdown-menu" id="mobileNavMenu">
+      <a href="#hero" class="unfold-link active">Home</a>
+      <a href="#portfolio" class="unfold-link">Portfolio</a>
+      <a href="#about" class="unfold-link">About</a>
+      <a href="#experience" class="unfold-link">Experience</a>
+      <a href="#services" class="unfold-link">Services</a>
+      <a href="#skills" class="unfold-link">Skills</a>
+      <a href="javascript:void(0)" onclick="openModal('cvModal')" class="unfold-link">Resume</a>
+      <a href="#contact" class="unfold-link">Contact</a>
+    </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="hero-section" id="hero">
-    <div class="hero-left">
-      <div class="hero-badge">
-        <span class="status-dot"></span> Available for high-impact web projects
+  <!-- Ambient Cursor Spotlight Follower -->
+  <div class="ambient-cursor-spotlight" id="cursorSpotlight" aria-hidden="true"></div>
+
+  <!-- ==========================================================================
+       HERO COVER — SIGNATURE COLORLIB UNFOLD CINEMATIC COVER (MATCHES SCREENSHOT 1:1)
+       ========================================================================== -->
+  <section class="hero-unfold-cover" id="hero">
+    <div class="hero-bg-media" aria-hidden="true">
+      <img src="hero-portrait.jpg?v=11" alt="Animesh Mishra" class="hero-portrait-img">
+      <div class="hero-vignette-overlay"></div>
+    </div>
+
+    <div class="hero-unfold-center-content">
+      <div class="hero-status-pill">
+        <span class="status-pulse-dot"></span>
+        <span>Available for Hire &amp; Opportunities</span>
       </div>
-
-      <h1 class="hero-title">
-        Hello, I'm <br>
-        <span class="gradient-text">Animesh Mishra</span>
-      </h1>
-
-      <div class="hero-subtitle-container">
-        <span>Building</span>
-        <span class="typing-text" id="typingText"></span>
-      </div>
-
-      <p class="hero-description">
-        I am a design-driven Frontend Engineer who creates high-performance, responsive, and visually magnetic web platforms. Specialized in modern UI frameworks, fluid micro-interactions, and active recall web tools like <strong>FlipQuiz</strong>.
+      <h1 class="hero-unfold-big-title">Animesh</h1>
+      <p class="hero-unfold-subheading">
+        I'm Animesh Mishra, A <span class="hero-role-rotator" id="roleRotator">Frontend Developer</span><br>Based In India
       </p>
-
-      <div class="hero-cta-group">
-        <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> Explore Projects</a>
-        <button class="btn btn-secondary" onclick="openResumeModal()"><i class="fas fa-file-alt"></i> View Resume</button>
-        <a href="#roadmap" class="btn btn-secondary"><i class="fas fa-map-signs"></i> Academic Roadmap</a>
-      </div>
-
-      <div class="hero-socials">
-        <a href="https://github.com/Ani2025-git" target="_blank" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/animesh-mishra-665010294" target="_blank" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="mailto:animeshmishra4123@gmail.com" class="social-icon" aria-label="Email"><i class="fas fa-envelope"></i></a>
-      </div>
     </div>
 
-    <!-- Hero Avatar -->
-    <div class="hero-avatar-wrapper">
-      <div class="avatar-card" id="avatarCard">
-        <div class="avatar-glow-ring"></div>
-        <div class="avatar-img-box">
-          <img src="profile.jpg" alt="Animesh Mishra" onerror="this.style.display='none'; document.getElementById('avatarFallback').style.display='flex';">
-          <div id="avatarFallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">
-            <i class="fas fa-user-astronaut avatar-placeholder-icon"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Floating Badge -->
-      <div class="floating-badge badge-bottom-left">
-        <i class="fas fa-code" style="color: var(--accent-cyan);"></i> UI/UX Specialist
-      </div>
-    </div>
+    <!-- Signature Unfold Mouse Scroll Down Indicator -->
+    <a href="#portfolio" class="unfold-scroll-indicator" aria-label="Scroll down to portfolio">
+      <span class="unfold-mouse-icon">
+        <span class="unfold-mouse-wheel"></span>
+      </span>
+      <span class="unfold-scroll-text">SCROLL</span>
+    </a>
   </section>
 
-  <!-- ABOUT & METRICS -->
-  <section class="section-padding reveal-up" id="about">
-    <div class="section-header">
-      <span class="section-tag">01 // Discovery</span>
-      <h2 class="section-title">About Me</h2>
-      <p class="section-subtitle">Combining clean frontend code with aesthetic visual precision.</p>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-text-box">
-        <p>
-          I'm Animesh, a passionate frontend developer based in India. I specialize in bridging the gap between design and functionality—crafting web applications that leave a lasting visual impression while running at peak performance.
+  <main class="container">
+    <!-- ==========================================================================
+         PORTFOLIO SECTION (#2 IN UNFOLD FLOW)
+         ========================================================================== -->
+    <section class="section-wrapper" id="portfolio">
+      <div class="section-header-wrap">
+        <span class="section-kicker">Portfolio</span>
+        <h2 class="section-main-heading">Featured Works</h2>
+        <p class="section-subtext">
+          Interactive web applications built with modern code architecture and live deployments.
         </p>
-        <p>
-          Whether building full-fledged active recall quiz platforms like <span class="about-highlight">FlipQuiz</span>, responsive e-commerce web applications like <span class="about-highlight">MediLife Pharmacy</span>, or interactive micro-games, my focus remains on user-centric design, fluid CSS animations, and clean architecture.
+        <div class="section-divider-line"></div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="project-filter-bar">
+        <button class="filter-tab-btn active" data-filter="all">All</button>
+        <button class="filter-tab-btn" data-filter="fullstack">Full-Stack</button>
+        <button class="filter-tab-btn" data-filter="ecommerce">E-Commerce</button>
+        <button class="filter-tab-btn" data-filter="games">Web Games</button>
+      </div>
+
+      <div class="projects-cards-grid" id="projectsGrid">
+        <!-- 1. FlipQuiz Platform -->
+        <div class="project-card-elem" data-category="fullstack">
+          <div class="browser-frame-header">
+            <div class="browser-dots">
+              <span class="dot dot-close"></span>
+              <span class="dot dot-minimize"></span>
+              <span class="dot dot-expand"></span>
+            </div>
+            <div class="browser-address-bar">
+              <i class="fas fa-lock"></i> flipquiz.onrender.com
+            </div>
+            <span class="browser-live-badge"><span class="live-dot"></span> LIVE</span>
+          </div>
+          <div class="project-thumbnail-top">
+            <i class="fas fa-question-circle project-thumbnail-icon"></i>
+          </div>
+          <div class="project-details-body">
+            <span class="project-category-tag">Full-Stack Web App</span>
+            <h3 class="project-card-heading">FlipQuiz Platform</h3>
+            <p class="project-summary-text">
+              An interactive assessment platform featuring card-flip animation mechanics, real-time score calculation algorithms, and category filters.
+            </p>
+            <div class="project-tech-pills">
+              <span class="tech-pill">JavaScript ES6+</span>
+              <span class="tech-pill">Flip Physics</span>
+              <span class="tech-pill">Render Cloud</span>
+            </div>
+            <div class="project-footer-row">
+              <a href="https://flipquiz.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-launch-demo">
+                <span>Live Demo</span>
+                <i class="fas fa-arrow-up-right-from-square" style="font-size: 11px;"></i>
+              </a>
+              <a href="https://github.com/ani2025-git" target="_blank" rel="noopener noreferrer" class="btn-github-code" title="View Source Code on GitHub">
+                <i class="fab fa-github"></i> <span>Code</span>
+              </a>
+              <button class="btn-info-pop" data-key="flipquiz">
+                <i class="fas fa-info-circle"></i> Info
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. MediLife Pharmacy -->
+        <div class="project-card-elem" data-category="ecommerce">
+          <div class="browser-frame-header">
+            <div class="browser-dots">
+              <span class="dot dot-close"></span>
+              <span class="dot dot-minimize"></span>
+              <span class="dot dot-expand"></span>
+            </div>
+            <div class="browser-address-bar">
+              <i class="fas fa-lock"></i> ani2025-git.github.io/e-commerce
+            </div>
+            <span class="browser-live-badge"><span class="live-dot"></span> LIVE</span>
+          </div>
+          <div class="project-thumbnail-top">
+            <i class="fas fa-clinic-medical project-thumbnail-icon"></i>
+          </div>
+          <div class="project-details-body">
+            <span class="project-category-tag">E-Commerce Storefront</span>
+            <h3 class="project-card-heading">MediLife Pharmacy</h3>
+            <p class="project-summary-text">
+              Digital medicine storefront with category filtering, real-time cart subtotal calculation, responsive catalog views, and simulated checkout flow.
+            </p>
+            <div class="project-tech-pills">
+              <span class="tech-pill">Vanilla JS</span>
+              <span class="tech-pill">Cart State</span>
+              <span class="tech-pill">GitHub Pages</span>
+            </div>
+            <div class="project-footer-row">
+              <a href="https://ani2025-git.github.io/e-commerce/" target="_blank" rel="noopener noreferrer" class="btn-launch-demo">
+                <span>Live Demo</span>
+                <i class="fas fa-arrow-up-right-from-square" style="font-size: 11px;"></i>
+              </a>
+              <a href="https://github.com/ani2025-git/e-commerce" target="_blank" rel="noopener noreferrer" class="btn-github-code" title="View Source Code on GitHub">
+                <i class="fab fa-github"></i> <span>Code</span>
+              </a>
+              <button class="btn-info-pop" data-key="medilife">
+                <i class="fas fa-info-circle"></i> Info
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Tic-Tac-Toe Arena -->
+        <div class="project-card-elem" data-category="games">
+          <div class="browser-frame-header">
+            <div class="browser-dots">
+              <span class="dot dot-close"></span>
+              <span class="dot dot-minimize"></span>
+              <span class="dot dot-expand"></span>
+            </div>
+            <div class="browser-address-bar">
+              <i class="fas fa-lock"></i> tic-tac-toe-uwu9.onrender.com
+            </div>
+            <span class="browser-live-badge"><span class="live-dot"></span> LIVE</span>
+          </div>
+          <div class="project-thumbnail-top">
+            <i class="fas fa-gamepad project-thumbnail-icon"></i>
+          </div>
+          <div class="project-details-body">
+            <span class="project-category-tag">Interactive Web Game</span>
+            <h3 class="project-card-heading">Tic-Tac-Toe Arena</h3>
+            <p class="project-summary-text">
+              2D matrix turn-based web game with smart mathematical win-line strike algorithms, player round histories, dynamic turn indicators, and responsive controls.
+            </p>
+            <div class="project-tech-pills">
+              <span class="tech-pill">Matrix Algorithms</span>
+              <span class="tech-pill">DOM Animation</span>
+              <span class="tech-pill">Render Cloud</span>
+            </div>
+            <div class="project-footer-row">
+              <a href="https://tic-tac-toe-uwu9.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-launch-demo">
+                <span>Play Game</span>
+                <i class="fas fa-arrow-up-right-from-square" style="font-size: 11px;"></i>
+              </a>
+              <a href="https://github.com/ani2025-git" target="_blank" rel="noopener noreferrer" class="btn-github-code" title="View Source Code on GitHub">
+                <i class="fab fa-github"></i> <span>Code</span>
+              </a>
+              <button class="btn-info-pop" data-key="tictactoe">
+                <i class="fas fa-info-circle"></i> Info
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Analytics Dashboard Hub -->
+        <div class="project-card-elem" data-category="fullstack">
+          <div class="browser-frame-header">
+            <div class="browser-dots">
+              <span class="dot dot-close"></span>
+              <span class="dot dot-minimize"></span>
+              <span class="dot dot-expand"></span>
+            </div>
+            <div class="browser-address-bar">
+              <i class="fas fa-lock"></i> staging.animesh.dev/analytics
+            </div>
+            <span class="browser-live-badge" style="color: #60a5fa;"><span class="live-dot" style="background:#60a5fa; box-shadow:0 0 6px #60a5fa;"></span> PREVIEW</span>
+          </div>
+          <div class="project-thumbnail-top">
+            <i class="fas fa-chart-line project-thumbnail-icon"></i>
+          </div>
+          <div class="project-details-body">
+            <span class="project-category-tag">Data Visualization</span>
+            <h3 class="project-card-heading">Analytics Dashboard</h3>
+            <p class="project-summary-text">
+              Real-time metrics console featuring dark mode data charts, live KPI status monitors, and customizable modular widget layouts.
+            </p>
+            <div class="project-tech-pills">
+              <span class="tech-pill">Data Widgets</span>
+              <span class="tech-pill">KPI UI</span>
+              <span class="tech-pill">Staging Preview</span>
+            </div>
+            <div class="project-footer-row">
+              <button class="btn-launch-demo" onclick="showToast('🚀 Preview build active in staging!')">
+                <span>Preview Demo</span>
+                <i class="fas fa-eye" style="font-size: 11px;"></i>
+              </button>
+              <a href="https://github.com/ani2025-git" target="_blank" rel="noopener noreferrer" class="btn-github-code" title="View Source Code on GitHub">
+                <i class="fab fa-github"></i> <span>Code</span>
+              </a>
+              <button class="btn-info-pop" data-key="analytics">
+                <i class="fas fa-info-circle"></i> Info
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         ABOUT ME SECTION (UNFOLD SPLIT WITH DOTTED ACCENT)
+         ========================================================================== -->
+    <section class="section-wrapper" id="about">
+      <div class="section-header-wrap">
+        <span class="section-kicker">About Me</span>
+        <h2 class="section-main-heading">Crafting With Precision</h2>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="about-split-grid">
+        <!-- Photo with Dotted Pattern Background -->
+        <div class="about-photo-col">
+          <div class="about-photo-wrap">
+            <div class="about-dotted-accent" aria-hidden="true"></div>
+            <div class="about-photo-box">
+              <img src="profile.jpg?v=2" alt="Animesh Mishra" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'">
+            </div>
+          </div>
+        </div>
+
+        <!-- Biography & Highlights -->
+        <div class="about-bio-col">
+          <p class="about-text-content">
+            I am a self-directed Frontend Developer and UI Engineer based in India with 2+ years of hands-on experience developing real-world web applications. I turn complex ideas and product requirements into clean, accessible, and responsive user experiences with modern JavaScript and component design systems.
+          </p>
+
+          <div class="about-stats-row">
+            <div>
+              <div class="stat-number">2+</div>
+              <div class="stat-label">Years Experience</div>
+            </div>
+            <div>
+              <div class="stat-number">10+</div>
+              <div class="stat-label">Projects Built</div>
+            </div>
+            <div>
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Code Quality</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <button class="btn-unfold-pill-white" onclick="openModal('cvModal')">
+              <i class="fas fa-file-pdf"></i> Download CV
+            </button>
+            <a href="#contact" class="btn-unfold-pill-trans">
+              Let's Talk
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CAREER EXPERIENCE & EDUCATION TIMELINE
+         ========================================================================== -->
+    <section class="section-wrapper" id="experience">
+      <div class="section-header-wrap">
+        <span class="section-kicker">Milestones &amp; Journey</span>
+        <h2 class="section-main-heading">Experience &amp; Education</h2>
+        <p class="section-subtext">
+          My progression as a frontend engineer, delivering production-grade web solutions and maintaining high standards in code quality.
+        </p>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="timeline-container">
+        <!-- Milestone 1: Frontend Developer -->
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-content-box">
+            <div class="timeline-header-row">
+              <div>
+                <h3 class="timeline-title">Frontend Developer &amp; UI Engineer</h3>
+                <span class="timeline-org">Independent &amp; Contract Work · India</span>
+              </div>
+              <span class="timeline-badge-active">2024 — Present</span>
+            </div>
+            <p class="timeline-body">
+              Architecting responsive, high-performance web applications using modern JavaScript (ES6+), React component systems, and CSS architecture. Engineered production platforms like FlipQuiz with live quiz scoring algorithms and digital storefronts with dynamic cart state management.
+            </p>
+            <div class="timeline-tags-list">
+              <span class="timeline-tag">React.js</span>
+              <span class="timeline-tag">JavaScript (ES6+)</span>
+              <span class="timeline-tag">State Management</span>
+              <span class="timeline-tag">REST APIs</span>
+              <span class="timeline-tag">Web Accessibility (a11y)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 2: Web Applications Developer -->
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-content-box">
+            <div class="timeline-header-row">
+              <div>
+                <h3 class="timeline-title">Web Applications Developer</h3>
+                <span class="timeline-org">Open-Source &amp; Applied Projects Lab</span>
+              </div>
+              <span class="timeline-badge-pill">2023 — 2024</span>
+            </div>
+            <p class="timeline-body">
+              Developed interactive web applications including Tic-Tac-Toe Arena featuring 2D matrix win-line strike detection algorithms and MediLife Pharmacy with category filtering and checkout simulation. Deployed production builds to Render Cloud and GitHub Pages.
+            </p>
+            <div class="timeline-tags-list">
+              <span class="timeline-tag">Vanilla JS</span>
+              <span class="timeline-tag">DOM Manipulation</span>
+              <span class="timeline-tag">Matrix Algorithms</span>
+              <span class="timeline-tag">CSS Grid / Flexbox</span>
+              <span class="timeline-tag">Render Cloud</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 3: Academic Foundation -->
+        <div class="timeline-item">
+          <div class="timeline-marker">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-content-box">
+            <div class="timeline-header-row">
+              <div>
+                <h3 class="timeline-title">Academic Foundation in Computer Science</h3>
+                <span class="timeline-org">Higher Education &amp; Software Foundations</span>
+              </div>
+              <span class="timeline-badge-pill">2021 — 2024</span>
+            </div>
+            <p class="timeline-body">
+              Comprehensive coursework in Data Structures, Object-Oriented Programming, Database Management Systems, and Web Application Development. Formed rigorous foundation in computational thinking and clean software design patterns.
+            </p>
+            <div class="timeline-tags-list">
+              <span class="timeline-tag">Data Structures</span>
+              <span class="timeline-tag">Object-Oriented Programming</span>
+              <span class="timeline-tag">Database Management</span>
+              <span class="timeline-tag">Software Engineering</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SERVICES SECTION (4 CLEAN CARDS)
+         ========================================================================== -->
+    <section class="section-wrapper" id="services">
+      <div class="section-header-wrap">
+        <span class="section-kicker">Services</span>
+        <h2 class="section-main-heading">What I Do</h2>
+        <p class="section-subtext">
+          Delivering production-ready frontend solutions from architectural planning to deployment.
+        </p>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="services-grid-4">
+        <div class="service-card">
+          <div class="service-icon-box"><i class="fas fa-laptop-code"></i></div>
+          <h3 class="service-title">Web Development</h3>
+          <p class="service-desc">
+            Building responsive, fast, and accessible digital applications with modern JavaScript (ES6+), React.js, and semantic markup.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon-box"><i class="fas fa-cubes"></i></div>
+          <h3 class="service-title">Interactive Web Apps</h3>
+          <p class="service-desc">
+            Developing complex interactive products like FlipQuiz with live scoring algorithms, state transitions, and responsive feedback.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon-box"><i class="fas fa-shopping-bag"></i></div>
+          <h3 class="service-title">E-Commerce Solutions</h3>
+          <p class="service-desc">
+            Architecting online storefronts like MediLife Pharmacy with instant category filters, persistent cart math, and streamlined checkout UX.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon-box"><i class="fas fa-layer-group"></i></div>
+          <h3 class="service-title">Responsive & Clean Code</h3>
+          <p class="service-desc">
+            Writing modular, maintainable, and thoroughly tested frontend codebases optimized for all mobile, tablet, and desktop viewports.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SKILLS SECTION (PROGRESS METERS)
+         ========================================================================== -->
+    <section class="section-wrapper" id="skills">
+      <div class="section-header-wrap">
+        <span class="section-kicker">Skills</span>
+        <h2 class="section-main-heading">Technical Proficiency</h2>
+        <p class="section-subtext">
+          Core technologies and frontend architecture standards I work with daily.
+        </p>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="skills-meter-list" id="skillsSection">
+        <!-- JavaScript -->
+        <div class="skill-meter-item">
+          <div class="skill-info-row">
+            <span>JavaScript (ES6+, DOM, Async/Await)</span>
+            <span>92%</span>
+          </div>
+          <div class="skill-track-bg">
+            <div class="skill-bar-fill" data-level="92%"></div>
+          </div>
+        </div>
+
+        <!-- React.js -->
+        <div class="skill-meter-item">
+          <div class="skill-info-row">
+            <span>React.js & Component Architecture</span>
+            <span>88%</span>
+          </div>
+          <div class="skill-track-bg">
+            <div class="skill-bar-fill" data-level="88%"></div>
+          </div>
+        </div>
+
+        <!-- HTML5 & CSS3 -->
+        <div class="skill-meter-item">
+          <div class="skill-info-row">
+            <span>HTML5, Responsive CSS3 & Design Systems</span>
+            <span>95%</span>
+          </div>
+          <div class="skill-track-bg">
+            <div class="skill-bar-fill" data-level="95%"></div>
+          </div>
+        </div>
+
+        <!-- UI/UX & Web Performance -->
+        <div class="skill-meter-item">
+          <div class="skill-info-row">
+            <span>UI/UX Architecture & Web Performance</span>
+            <span>90%</span>
+          </div>
+          <div class="skill-track-bg">
+            <div class="skill-bar-fill" data-level="90%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CONTACT SECTION
+         ========================================================================== -->
+    <section class="section-wrapper" id="contact">
+      <div class="section-header-wrap">
+        <span class="section-kicker">Contact</span>
+        <h2 class="section-main-heading">Let's Connect</h2>
+        <p class="section-subtext">
+          Have an open role, project inquiry, or collaboration idea? Reach out directly.
+        </p>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="contact-split-layout">
+        <!-- Direct Quick Cards -->
+        <div class="contact-quick-cards">
+          <!-- Email Card -->
+          <div class="contact-card-box">
+            <div class="contact-info-left">
+              <div class="contact-icon-bubble"><i class="fas fa-envelope"></i></div>
+              <div>
+                <div class="contact-type-label">Email</div>
+                <div class="contact-val-string">animeshmishra4123@gmail.com</div>
+              </div>
+            </div>
+            <button class="btn-clipboard-trigger" onclick="copyContact('animeshmishra4123@gmail.com')">
+              <i class="far fa-copy"></i> Copy
+            </button>
+          </div>
+
+          <!-- Phone Card -->
+          <div class="contact-card-box">
+            <div class="contact-info-left">
+              <div class="contact-icon-bubble"><i class="fas fa-phone-alt"></i></div>
+              <div>
+                <div class="contact-type-label">Phone</div>
+                <div class="contact-val-string">+91 7029849318</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn-clipboard-trigger" onclick="copyContact('+917029849318')">
+                <i class="far fa-copy"></i> Copy
+              </button>
+              <a href="tel:+917029849318" class="btn-clipboard-trigger" style="text-decoration:none;">
+                <i class="fas fa-phone"></i> Call
+              </a>
+            </div>
+          </div>
+
+          <!-- WhatsApp Direct -->
+          <div class="contact-card-box">
+            <div class="contact-info-left">
+              <div class="contact-icon-bubble"><i class="fab fa-whatsapp"></i></div>
+              <div>
+                <div class="contact-type-label">WhatsApp</div>
+                <div class="contact-val-string">Instant Chat</div>
+              </div>
+            </div>
+            <a href="https://wa.me/917029849318?text=Hi%20Animesh!" target="_blank" rel="noopener noreferrer" class="btn-clipboard-trigger" style="text-decoration:none;">
+              Chat ↗
+            </a>
+          </div>
+
+          <!-- LinkedIn Profile -->
+          <div class="contact-card-box">
+            <div class="contact-info-left">
+              <div class="contact-icon-bubble"><i class="fab fa-linkedin-in"></i></div>
+              <div>
+                <div class="contact-type-label">LinkedIn</div>
+                <div class="contact-val-string">Professional Network</div>
+              </div>
+            </div>
+            <a href="https://www.linkedin.com/in/animesh-mishra-665010294" target="_blank" rel="noopener noreferrer" class="btn-clipboard-trigger" style="text-decoration:none;">
+              Connect ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-card">
+          <form id="contactForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-input-group">
+              <input type="text" id="senderName" class="unfold-input" placeholder="Your Name" required>
+            </div>
+            <div class="form-input-group">
+              <input type="email" id="senderEmail" class="unfold-input" placeholder="Your Email Address" required>
+            </div>
+            <div class="form-input-group">
+              <input type="text" id="senderSubject" class="unfold-input" placeholder="Subject / Role Inquiry" required>
+            </div>
+            <div class="form-input-group">
+              <textarea id="senderMsg" class="unfold-textarea" placeholder="Write your message here..." required></textarea>
+            </div>
+            <button type="submit" class="btn-send-message" id="submitBtn">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       CURRICULUM VITAE MODAL
+       ========================================================================== -->
+  <div class="modal-overlay-backdrop" id="cvModal">
+    <div class="modal-sheet-dialog">
+      <button class="btn-close-modal" onclick="closeModal('cvModal')" aria-label="Close modal"><i class="fas fa-times"></i></button>
+      <div style="text-align: center; margin-bottom: 24px;">
+        <span class="section-kicker">Curriculum Vitae</span>
+        <h2 style="font-family: var(--font-heading); font-size: 26px; margin-top: 6px; color:var(--text-primary);">Animesh Mishra</h2>
+        <p style="color: var(--text-secondary); font-size: 14px; font-weight: 600;">Frontend Developer & UI Engineer</p>
+      </div>
+
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 20px;">
+        <h4 style="font-size: 15px; margin-bottom: 8px; color:var(--text-primary);"><i class="fas fa-user-check" style="margin-right:8px;"></i> Profile Summary</h4>
+        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.65;">
+          Frontend Developer with 2+ years of hands-on experience building clean, responsive, and performant web applications. Proven record delivering interactive web products with React.js, modern JavaScript, REST APIs, and responsive design systems.
         </p>
       </div>
 
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-number">2+</div>
-          <div class="metric-label">Years Exp.</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px;">
+          <h4 style="font-size: 14.5px; margin-bottom: 8px; color:var(--text-primary);"><i class="fas fa-code" style="margin-right:8px;"></i> Competencies</h4>
+          <ul style="list-style: none; font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+            <li>• Modern JavaScript (ES6+), DOM, Async</li>
+            <li>• React.js Components & Hooks</li>
+            <li>• Responsive CSS3 (Flexbox & Grid)</li>
+            <li>• REST API Integration & Fetch</li>
+            <li>• Git Version Control & Deployment</li>
+          </ul>
         </div>
-        <div class="metric-card">
-          <div class="metric-number">15+</div>
-          <div class="metric-label">Projects Built</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-number">100%</div>
-          <div class="metric-label">Responsive UI</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-number">India 🇮🇳</div>
-          <div class="metric-label">Location</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS / TECH ARSENAL -->
-  <section class="section-padding reveal-up" id="skills">
-    <div class="section-header">
-      <span class="section-tag">02 // Capabilities</span>
-      <h2 class="section-title">Tech Arsenal</h2>
-      <p class="section-subtitle">Core technologies and design tools I leverage daily.</p>
-    </div>
-
-    <div class="skills-container">
-      <!-- Category 1 -->
-      <div class="skill-category-card">
-        <h3 class="skill-category-title"><i class="fas fa-laptop-code"></i> Frontend Engineering</h3>
-        
-        <div class="skill-item">
-          <div class="skill-info"><span>HTML5 / Semantic Web</span><span>95%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="95%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-info"><span>JavaScript (ES6+)</span><span>90%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="90%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-info"><span>React.js Framework</span><span>85%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="85%"></div></div>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px;">
+          <h4 style="font-size: 14.5px; margin-bottom: 8px; color:var(--text-primary);"><i class="fas fa-id-card" style="margin-right:8px;"></i> Quick Details</h4>
+          <ul style="list-style: none; font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+            <li>• Location: India 🇮🇳</li>
+            <li>• Email: animeshmishra4123@gmail.com</li>
+            <li>• Phone: +91 7029849318</li>
+            <li>• GitHub: github.com/Ani2025-git</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Category 2 -->
-      <div class="skill-category-card">
-        <h3 class="skill-category-title"><i class="fas fa-paint-brush"></i> UI/UX & Styling</h3>
-        
-        <div class="skill-item">
-          <div class="skill-info"><span>CSS3 / Animations / Glassmorphism</span><span>95%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="95%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-info"><span>Figma UI/UX Prototyping</span><span>88%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="88%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-info"><span>Responsive Layouts & Mobile First</span><span>95%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="95%"></div></div>
-        </div>
-      </div>
-
-      <!-- Category 3 -->
-      <div class="skill-category-card">
-        <h3 class="skill-category-title"><i class="fas fa-tools"></i> Ecosystem & Deployment</h3>
-        
-        <div class="skill-item">
-          <div class="skill-info"><span>Git & GitHub Workflow</span><span>90%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="90%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-info"><span>Render / Vercel / GitHub Pages</span><span>92%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="92%"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-info"><span>Web APIs & DOM State</span><span>88%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" data-progress="88%"></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURED PROJECTS -->
-  <section class="section-padding reveal-up" id="projects">
-    <div class="section-header">
-      <span class="section-tag">03 // Portfolio</span>
-      <h2 class="section-title">Featured Projects</h2>
-      <p class="section-subtitle">Selected web applications built with performance and precision.</p>
-    </div>
-
-    <!-- Filter Buttons -->
-    <div class="project-filters">
-      <button class="filter-btn active" data-filter="all">All Projects</button>
-      <button class="filter-btn" data-filter="webapp">Web Apps</button>
-      <button class="filter-btn" data-filter="game">Games</button>
-      <button class="filter-btn" data-filter="ui">UI/UX</button>
-    </div>
-
-    <!-- Projects Grid -->
-    <div class="projects-grid" id="projectsGrid">
-      
-      <!-- Project 1: FlipQuiz (NEW & FEATURED) -->
-      <div class="project-card featured-project" data-category="webapp">
-        <div class="project-top-header">
-          <div class="project-icon-wrapper"><i class="fas fa-layer-group" style="color: var(--accent-cyan);"></i></div>
-          <span class="project-badge badge-featured">✨ New Release</span>
-        </div>
-        <h3 class="project-title">FlipQuiz 🎴</h3>
-        <p class="project-desc">An interactive active recall & flashcard quiz platform featuring dynamic card flips, custom quiz sets, score tracking, and fluid UX.</p>
-        
-        <div class="project-tech-tags">
-          <span class="tech-tag">JavaScript ES6+</span>
-          <span class="tech-tag">Glassmorphic UI</span>
-          <span class="tech-tag">Web Storage</span>
-          <span class="tech-tag">Render</span>
-        </div>
-
-        <div class="project-actions">
-          <a href="https://flipquiz.onrender.com" target="_blank" class="btn-project btn-project-live">Live Demo <i class="fas fa-external-link-alt"></i></a>
-          <button class="btn-project btn-project-details" onclick="openModal('flipquiz')">Details</button>
-        </div>
-      </div>
-
-      <!-- Project 2: MediLife Pharmacy -->
-      <div class="project-card" data-category="webapp">
-        <div class="project-top-header">
-          <div class="project-icon-wrapper"><i class="fas fa-clinic-medical" style="color: #00f7ff;"></i></div>
-          <span class="project-badge badge-live">Live App</span>
-        </div>
-        <h3 class="project-title">MediLife Pharmacy 🏥</h3>
-        <p class="project-desc">Complete online pharmacy e-commerce web app featuring product filtering, login flow, dynamic cart management, and responsive grid layout.</p>
-        
-        <div class="project-tech-tags">
-          <span class="tech-tag">JavaScript</span>
-          <span class="tech-tag">CSS Grid/Flex</span>
-          <span class="tech-tag">E-Commerce</span>
-          <span class="tech-tag">GitHub Pages</span>
-        </div>
-
-        <div class="project-actions">
-          <a href="https://ani2025-git.github.io/e-commerce/" target="_blank" class="btn-project btn-project-live">Live Demo <i class="fas fa-external-link-alt"></i></a>
-          <button class="btn-project btn-project-details" onclick="openModal('medilife')">Details</button>
-        </div>
-      </div>
-
-      <!-- Project 3: Tic-Tac-Toe Game -->
-      <div class="project-card" data-category="game">
-        <div class="project-top-header">
-          <div class="project-icon-wrapper"><i class="fas fa-gamepad" style="color: var(--accent-violet);"></i></div>
-          <span class="project-badge badge-live">Live Game</span>
-        </div>
-        <h3 class="project-title">Tic-Tac-Toe Game 🎮</h3>
-        <p class="project-desc">Interactive Tic-Tac-Toe web game featuring smooth turn transitions, win detection algorithms, score keeping, and responsive controls.</p>
-        
-        <div class="project-tech-tags">
-          <span class="tech-tag">JavaScript</span>
-          <span class="tech-tag">CSS Animations</span>
-          <span class="tech-tag">Game State</span>
-          <span class="tech-tag">Render</span>
-        </div>
-
-        <div class="project-actions">
-          <a href="https://tic-tac-toe-uwu9.onrender.com" target="_blank" class="btn-project btn-project-live">Live Demo <i class="fas fa-external-link-alt"></i></a>
-          <button class="btn-project btn-project-details" onclick="openModal('tictactoe')">Details</button>
-        </div>
-      </div>
-
-      <!-- Project 4: Portfolio 4.0 -->
-      <div class="project-card" data-category="ui">
-        <div class="project-top-header">
-          <div class="project-icon-wrapper"><i class="fas fa-bolt" style="color: var(--accent-pink);"></i></div>
-          <span class="project-badge badge-live">Current Site</span>
-        </div>
-        <h3 class="project-title">Portfolio 4.0 ⚡</h3>
-        <p class="project-desc">Ultra-premium personal website featuring glassmorphism, interactive canvas constellation background, project filtering, and interactive roadmap.</p>
-        
-        <div class="project-tech-tags">
-          <span class="tech-tag">HTML5 / CSS3</span>
-          <span class="tech-tag">Vanilla JS</span>
-          <span class="tech-tag">Canvas API</span>
-          <span class="tech-tag">Glassmorphism</span>
-        </div>
-
-        <div class="project-actions">
-          <a href="#" class="btn-project btn-project-live" onclick="showToast('⚡ You are currently exploring Portfolio 4.0!'); return false;">Active View</a>
-          <button class="btn-project btn-project-details" onclick="openModal('portfolio')">Details</button>
-        </div>
-      </div>
-
-      <!-- Project 5: Analytics Hub -->
-      <div class="project-card" data-category="webapp">
-        <div class="project-top-header">
-          <div class="project-icon-wrapper"><i class="fas fa-chart-line" style="color: var(--accent-amber);"></i></div>
-          <span class="project-badge badge-soon">Coming Soon</span>
-        </div>
-        <h3 class="project-title">Analytics Hub 📊</h3>
-        <p class="project-desc">Real-time data visualization dashboard featuring interactive charts, dark mode themes, filterable metrics, and user analytics.</p>
-        
-        <div class="project-tech-tags">
-          <span class="tech-tag">React.js</span>
-          <span class="tech-tag">Chart.js</span>
-          <span class="tech-tag">Dashboard</span>
-        </div>
-
-        <div class="project-actions">
-          <button class="btn-project btn-project-live" onclick="showToast('📊 Analytics Hub demo is coming soon! Stay tuned.')">Preview</button>
-          <button class="btn-project btn-project-details" onclick="openModal('analytics')">Details</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ACADEMIC & CAREER ROADMAP -->
-  <section class="section-padding reveal-up" id="roadmap">
-    <div class="section-header">
-      <span class="section-tag">04 // Education & Journey</span>
-      <h2 class="section-title">Academic Roadmap 🎓</h2>
-      <p class="section-subtitle">My educational background, academic milestones, and continuous technical specialization.</p>
-    </div>
-
-    <div class="timeline-container">
-      
-      <!-- Academic Step 1 -->
-      <div class="timeline-item">
-        <div class="timeline-node"></div>
-        <div class="timeline-content">
-          <span class="timeline-date">Secondary Education</span>
-          <h3 class="timeline-title">High Schooling & Core Fundamentals 🏫</h3>
-          <p class="timeline-desc">Completed secondary education with a strong emphasis on Science, Mathematics, and Computer Science fundamentals, laying the groundwork for logical problem-solving.</p>
-        </div>
-      </div>
-
-      <!-- Academic Step 2 -->
-      <div class="timeline-item">
-        <div class="timeline-node"></div>
-        <div class="timeline-content">
-          <span class="timeline-date">Higher Secondary</span>
-          <h3 class="timeline-title">Higher Secondary Specialization</h3>
-          <p class="timeline-desc">Focused on Chemistry,and Computer Applications. Developed a deep fascination for web design, programming logic, and software development.</p>
-        </div>
-      </div>
-
-      <!-- Academic Step 3 -->
-      <div class="timeline-item">
-        <div class="timeline-node"></div>
-        <div class="timeline-content">
-          <span class="timeline-date">Undergraduate Degree</span>
-          <h3 class="timeline-title">Bachelor's Degree in Computer Applications 🎓</h3>
-          <p class="timeline-desc">Academic studies covering Data Structures & Algorithms, Database Management Systems (DBMS), Web Technologies, Object-Oriented Programming (OOP), and Software Engineering principles.</p>
-        </div>
-      </div>
-
-      <!-- Academic Step 4 -->
-      <div class="timeline-item">
-        <div class="timeline-node"></div>
-        <div class="timeline-content">
-          <span class="timeline-date">Specialization & Project Application</span>
-          <h3 class="timeline-title">Frontend Engineering & UI/UX Mastery 💻</h3>
-          <p class="timeline-desc">Applied academic theory into practical web software: engineered live platforms like <strong>FlipQuiz 🎴</strong> (active recall learning tool), <strong>MediLife Pharmacy 🏥</strong>, and responsive UI applications.</p>
-        </div>
-      </div>
-
-      <!-- Academic Step 5 -->
-      <div class="timeline-item">
-        <div class="timeline-node"></div>
-        <div class="timeline-content">
-          <span class="timeline-date">Future Academic Vision</span>
-          <h3 class="timeline-title">Fullstack Architecture & Continuous Learning 🚀</h3>
-          <p class="timeline-desc">Pursuing advanced certifications in Cloud Computing, AI-assisted web applications, full-stack frameworks (Next.js/Node.js), and scalable software engineering.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- CONTACT & GET NOTIFIED HUB -->
-  <section class="section-padding reveal-up" id="contact">
-    <div class="section-header">
-      <span class="section-tag">05 // Connect</span>
-      <h2 class="section-title">Let's Work Together</h2>
-      <p class="section-subtitle">Have a project in mind or want to chat? Reach out directly.</p>
-    </div>
-
-    <div class="contact-wrapper">
-      <!-- Contact Info Box -->
-      <div class="contact-card">
-        <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">Contact Information</h3>
-        <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6;">Feel free to connect via email, LinkedIn, GitHub, or phone for collaborations and inquiries.</p>
-
-        <div class="contact-links-grid">
-          <div class="contact-link-item" onclick="copyEmail()">
-            <i class="fas fa-envelope"></i>
-            <div style="flex:1;">
-              <div style="font-size:12px; color:var(--text-dim);">Email Me</div>
-              <div style="font-size:14px; font-weight:600;">animeshmishra4123@gmail.com</div>
-            </div>
-            <i class="fas fa-copy" style="font-size:14px; color:var(--text-dim);"></i>
-          </div>
-
-          <a href="https://www.linkedin.com/in/animesh-mishra-665010294" target="_blank" class="contact-link-item">
-            <i class="fab fa-linkedin"></i>
-            <div style="flex:1;">
-              <div style="font-size:12px; color:var(--text-dim);">LinkedIn</div>
-              <div style="font-size:14px; font-weight:600;">animesh-mishra-665010294</div>
-            </div>
-            <i class="fas fa-external-link-alt" style="font-size:12px; color:var(--text-dim);"></i>
-          </a>
-
-          <a href="https://github.com/Ani2025-git" target="_blank" class="contact-link-item">
-            <i class="fab fa-github"></i>
-            <div style="flex:1;">
-              <div style="font-size:12px; color:var(--text-dim);">GitHub</div>
-              <div style="font-size:14px; font-weight:600;">Ani2025-git</div>
-            </div>
-            <i class="fas fa-external-link-alt" style="font-size:12px; color:var(--text-dim);"></i>
-          </a>
-
-          <div class="contact-link-item" onclick="showToast('📞 Direct Contact: +91 7029849318')">
-            <i class="fas fa-phone-alt"></i>
-            <div style="flex:1;">
-              <div style="font-size:12px; color:var(--text-dim);">Phone / WhatsApp</div>
-              <div style="font-size:14px; font-weight:600;">+91 7029849318</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Get Notified Subscription Box -->
-      <div class="notify-box">
-        <div class="notify-icon"><i class="fas fa-bell"></i></div>
-        <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 8px;">Stay Updated</h3>
-        <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">Subscribe to receive updates on new project launches, FlipQuiz features, and technical articles.</p>
-
-        <form class="notify-form" id="notifyForm" onsubmit="handleSubscribe(event)">
-          <input type="email" class="notify-input" id="notifyEmailInput" placeholder="Enter your email address..." required>
-          <button type="submit" class="btn btn-primary" style="padding:14px 24px;"><i class="fas fa-paper-plane"></i> Notify Me</button>
-        </form>
-        <p style="font-size: 12px; color: var(--text-dim); margin-top: 14px;">✨ No spam. Unsubscribe anytime.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 Animesh Mishra. Made by Ani</p>
-  </footer>
-
-  <!-- SCROLL TO TOP BUTTON -->
-  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
-
-  <!-- RESUME PREVIEW & DOWNLOAD MODAL -->
-  <div class="modal-backdrop" id="resumeModal">
-    <div class="modal-box resume-modal-box">
-      <button class="modal-close" onclick="closeResumeModal()"><i class="fas fa-times"></i></button>
-
-      <div class="resume-header">
-        <div>
-          <h2 style="font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">Animesh Mishra — Official Resume 📄</h2>
-          <p style="color: var(--accent-cyan); font-weight: 600; font-size: 14px;">Frontend Engineer & UI/UX Specialist</p>
-        </div>
-        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-          <div><i class="fas fa-envelope" style="color: var(--accent-cyan);"></i> animeshmishra4123@gmail.com</div>
-          <div><i class="fas fa-phone-alt" style="color: var(--accent-cyan);"></i> +91 7029849318</div>
-        </div>
-      </div>
-
-      <!-- Resume Preview Content Card -->
-      <div class="resume-body">
-        <div class="resume-section">
-          <h4><i class="fas fa-user-circle"></i> Summary</h4>
-          <p>Design-driven Frontend Developer with 2+ years of experience crafting high-performance, responsive web applications. Expert in HTML5, CSS3, JavaScript ES6+, React.js, liquid glassmorphism UI design, and active recall study applications like FlipQuiz.</p>
-        </div>
-
-        <div class="resume-section">
-          <h4><i class="fas fa-graduation-cap"></i> Academic Qualifications</h4>
-          <div class="resume-item">
-            <div class="resume-item-title">Bachelor's Degree in Applications</div>
-            <div class="resume-item-desc">Focused on Software Engineering, Web Technologies, Database Management Systems (DBMS), and Data Structures.</div>
-          </div>
-          <div class="resume-item">
-            <div class="resume-item-title">Higher Secondary Education</div>
-            <div class="resume-item-desc">Chemistry and Computer Applications.</div>
-          </div>
-        </div>
-
-        <div class="resume-section">
-          <h4><i class="fas fa-laptop-code"></i> Featured Web Projects</h4>
-          <div class="resume-item">
-            <div class="resume-item-title">FlipQuiz 🎴 — Active Recall Flashcard Web App</div>
-            <div class="resume-item-desc">Interactive quiz platform with 3D flip card animations (flipquiz.onrender.com).</div>
-          </div>
-          <div class="resume-item">
-            <div class="resume-item-title">MediLife Pharmacy 🏥 — E-Commerce Web App</div>
-            <div class="resume-item-desc">Pharmacy e-commerce web platform (ani2025-git.github.io/e-commerce/).</div>
-          </div>
-        </div>
-
-        <div class="resume-section">
-          <h4><i class="fas fa-cogs"></i> Technical Skills</h4>
-          <div class="resume-skills-tags">
-            <span>HTML5</span><span>CSS3</span><span>JavaScript ES6+</span><span>React.js</span><span>Figma UI/UX</span><span>Git & GitHub</span><span>Render</span><span>Responsive Design</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="resume-actions">
-        <a href="resume.pdf" download="Animesh_Mishra_Resume.pdf" target="_blank" class="btn btn-primary" onclick="showToast('📥 Opening / Downloading Animesh Mishra Resume...')">
-          <i class="fas fa-download"></i> Download Resume (PDF)
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-unfold-pill-white" onclick="window.print()">
+          <i class="fas fa-print"></i> Print / Save as PDF
+        </button>
+        <a href="mailto:animeshmishra4123@gmail.com?subject=Job%20Opportunity%20for%20Animesh%20Mishra" class="btn-unfold-pill-trans">
+          <i class="fas fa-briefcase"></i> Discuss Opportunity
         </a>
-        <button class="btn btn-secondary" onclick="closeResumeModal()">Close Preview</button>
       </div>
     </div>
   </div>
 
-  <!-- PROJECT MODAL BACKDROP & BOX -->
-  <div class="modal-backdrop" id="projectModal">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-      <h3 id="modalTitle" style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: var(--text-main);"></h3>
-      <p id="modalDesc" style="color: var(--text-muted); font-size: 15px; line-height: 1.6;"></p>
-      
-      <ul class="modal-features-list" id="modalFeatures"></ul>
-
-      <div style="display: flex; gap: 12px; margin-top: 24px;">
-        <a id="modalLiveBtn" href="#" target="_blank" class="btn btn-primary" style="flex:1; justify-content:center;">Launch Live Demo <i class="fas fa-external-link-alt"></i></a>
+  <!-- ==========================================================================
+       PROJECT DETAILS MODAL
+       ========================================================================== -->
+  <div class="modal-overlay-backdrop" id="projectModal">
+    <div class="modal-sheet-dialog">
+      <button class="btn-close-modal" onclick="closeModal('projectModal')" aria-label="Close modal"><i class="fas fa-times"></i></button>
+      <div id="projectModalContent">
+        <!-- Injected via JavaScript -->
       </div>
     </div>
   </div>
 
-  <!-- TOAST NOTIFICATION CONTAINER -->
-  <div class="toast-container" id="toast">
-    <i class="fas fa-info-circle" style="color: var(--accent-cyan);"></i>
+  <!-- Toast Alert -->
+  <div class="unfold-toast" id="toastAlert">
+    <i class="fas fa-check"></i>
     <span id="toastMsg">Notification message</span>
   </div>
 
-  <!-- JavaScript Logic -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // 1. Hide Loader Screen
-      setTimeout(() => {
-        const intro = document.getElementById("introScreen");
-        intro.style.opacity = "0";
-        intro.style.visibility = "hidden";
-      }, 1600);
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content-row">
+        <div>© 2026 <strong>Animesh Mishra</strong>. All Rights Reserved.</div>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          <a href="#hero">Home</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#about">About</a>
+          <a href="#experience">Experience</a>
+          <a href="#services">Services</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-      // 2. Scroll Reading Progress Bar & Header Shadow
-      const scrollProgress = document.getElementById("scrollProgress");
-      const header = document.getElementById("header");
-      const scrollTopBtn = document.getElementById("scrollTopBtn");
-
-      window.addEventListener("scroll", () => {
-        const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        scrollProgress.style.width = scrolled + "%";
-
-        if (winScroll > 50) {
-          header.classList.add("scrolled");
-        } else {
-          header.classList.remove("scrolled");
-        }
-
-        if (winScroll > 400) {
-          scrollTopBtn.classList.add("show");
-        } else {
-          scrollTopBtn.classList.remove("show");
-        }
-      });
-
-      scrollTopBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-
-      // 3. Mobile Navigation Menu & Cross Icon Toggle
-      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-      const mobileCloseBtn = document.getElementById("mobileCloseBtn");
-      const menuToggleIcon = document.getElementById("menuToggleIcon");
-      const navMenu = document.getElementById("navMenu");
-      const navOverlay = document.getElementById("navOverlay");
-
-      function openMobileMenu() {
-        navMenu.classList.add("active");
-        navOverlay.classList.add("active");
-        if (menuToggleIcon) {
-          menuToggleIcon.className = "fas fa-times";
-        }
-      }
-
-      function closeMobileMenu() {
-        navMenu.classList.remove("active");
-        navOverlay.classList.remove("active");
-        if (menuToggleIcon) {
-          menuToggleIcon.className = "fas fa-bars";
-        }
-      }
-
-      mobileMenuBtn.addEventListener("click", () => {
-        if (navMenu.classList.contains("active")) {
-          closeMobileMenu();
-        } else {
-          openMobileMenu();
-        }
-      });
-
-      if (mobileCloseBtn) {
-        mobileCloseBtn.addEventListener("click", closeMobileMenu);
-      }
-      navOverlay.addEventListener("click", closeMobileMenu);
-
-      document.querySelectorAll(".nav-link").forEach(link => {
-        link.addEventListener("click", closeMobileMenu);
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeMobileMenu();
-      });
-
-      // 3b. Scroll Spy - Active Section Highlight in Header
-      const sections = document.querySelectorAll("section[id]");
-      const navLinks = document.querySelectorAll(".nav-link");
-
-      window.addEventListener("scroll", () => {
-        let currentSection = "";
-        const scrollY = window.pageYOffset;
-
-        sections.forEach(section => {
-          const sectionHeight = section.offsetHeight;
-          const sectionTop = section.offsetTop - 120;
-          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-            currentSection = section.getAttribute("id");
-          }
-        });
-
-        navLinks.forEach(link => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + currentSection) {
-            link.classList.add("active");
-          }
-        });
-      });
-
-      // 4. Dynamic Multi-Text Typing Effect
-      const typingElement = document.getElementById("typingText");
-      const phrases = [
-        "Frontend Web Applications",
-        "FlipQuiz Active Recall App",
-        "Interactive Glassmorphism UI",
-        "E-Commerce Solutions"
-      ];
-      let phraseIndex = 0;
-      let charIndex = 0;
-      let isDeleting = false;
-
-      function typeLoop() {
-        const currentPhrase = phrases[phraseIndex];
-        if (!isDeleting) {
-          typingElement.textContent = currentPhrase.substring(0, charIndex++);
-          if (charIndex > currentPhrase.length) {
-            isDeleting = true;
-            setTimeout(typeLoop, 1800);
-            return;
-          }
-        } else {
-          typingElement.textContent = currentPhrase.substring(0, charIndex--);
-          if (charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-          }
-        }
-        setTimeout(typeLoop, isDeleting ? 40 : 80);
-      }
-      typeLoop();
-
-      // 5. Scroll Reveal & Skill Progress Bar Trigger
-      const reveals = document.querySelectorAll(".reveal-up");
-      const skillBars = document.querySelectorAll(".skill-bar-fill");
-
-      const observerOptions = { threshold: 0.15 };
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-
-            // Fill skill bars if intersecting section contains them
-            const bars = entry.target.querySelectorAll(".skill-bar-fill");
-            bars.forEach(bar => {
-              const targetWidth = bar.getAttribute("data-progress");
-              bar.style.width = targetWidth;
-            });
-          }
-        });
-      }, observerOptions);
-
-      reveals.forEach(el => observer.observe(el));
-
-      // 6. Project Category Filter
-      const filterBtns = document.querySelectorAll(".filter-btn");
-      const projectCards = document.querySelectorAll("#projectsGrid .project-card");
-
-      filterBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          filterBtns.forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-
-          const filter = btn.getAttribute("data-filter");
-          projectCards.forEach(card => {
-            if (filter === "all" || card.getAttribute("data-category") === filter) {
-              card.style.display = "flex";
-              setTimeout(() => { card.style.opacity = "1"; card.style.transform = "translateY(0)"; }, 50);
-            } else {
-              card.style.opacity = "0";
-              card.style.transform = "translateY(20px)";
-              setTimeout(() => { card.style.display = "none"; }, 300);
-            }
-          });
-        });
-      });
-
-      // 7. Interactive Canvas Particle Constellation Background
-      const canvas = document.getElementById("particleCanvas");
-      const ctx = canvas.getContext("2d");
-      let width = canvas.width = window.innerWidth;
-      let height = canvas.height = window.innerHeight;
-
-      window.addEventListener("resize", () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      });
-
-      const particles = [];
-      const particleCount = Math.min(Math.floor(window.innerWidth / 16), 70);
-      let mouse = { x: null, y: null, radius: 140 };
-
-      window.addEventListener("mousemove", (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y;
-      });
-
-      class Particle {
-        constructor() {
-          this.x = Math.random() * width;
-          this.y = Math.random() * height;
-          this.radius = Math.random() * 2 + 1;
-          this.vx = (Math.random() - 0.5) * 0.8;
-          this.vy = (Math.random() - 0.5) * 0.8;
-        }
-        update() {
-          this.x += this.vx;
-          this.y += this.vy;
-
-          if (this.x < 0 || this.x > width) this.vx *= -1;
-          if (this.y < 0 || this.y > height) this.vy *= -1;
-        }
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(0, 247, 255, 0.5)";
-          ctx.fill();
-        }
-      }
-
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-      }
-
-      function animateParticles() {
-        ctx.clearRect(0, 0, width, height);
-
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].update();
-          particles[i].draw();
-
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < 110) {
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(139, 92, 246, ${1 - dist / 110})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
-          }
-        }
-        requestAnimationFrame(animateParticles);
-      }
-      animateParticles();
-    });
-
-    // 8. Toast Helper
-    function showToast(message) {
-      const toast = document.getElementById("toast");
-      const toastMsg = document.getElementById("toastMsg");
-      toastMsg.textContent = message;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 3500);
-    }
-
-    // 9. Copy Email Helper
-    function copyEmail() {
-      navigator.clipboard.writeText("animeshmishra4123@gmail.com").then(() => {
-        showToast("📋 Email copied to clipboard: animeshmishra4123@gmail.com");
-      }).catch(() => {
-        showToast("✉️ Email: animeshmishra4123@gmail.com");
-      });
-    }
-
-    // 10. Subscribe Form Handler
-    function handleSubscribe(e) {
-      e.preventDefault();
-      const input = document.getElementById("notifyEmailInput");
-      const email = input.value.trim();
-      if (!email) return;
-
-      let subscribers = JSON.parse(localStorage.getItem("animesh_subscribers") || "[]");
-      if (subscribers.includes(email)) {
-        showToast("📧 You're already subscribed! Thank you.");
-      } else {
-        subscribers.push(email);
-        localStorage.setItem("animesh_subscribers", JSON.stringify(subscribers));
-        showToast(`🎉 Thanks ${email.split('@')[0]}! You will receive project updates.`);
-      }
-      input.value = "";
-    }
-
-    // 11. Modal Popup Data & Handlers
-    const projectDetails = {
-      flipquiz: {
-        title: "FlipQuiz 🎴 — Active Recall Flashcard App",
-        desc: "FlipQuiz is a modern interactive learning platform designed for active recall study techniques. Features smooth CSS card flip animations, quiz set management, score calculation, and progress persistence.",
-        features: [
-          "Fluid 3D card flip micro-interactions",
-          "Custom card set creation & local storage persistence",
-          "Real-time score calculation & answer validation",
-          "Fully responsive mobile glassmorphic layout"
-        ],
-        liveUrl: "https://flipquiz.onrender.com"
-      },
-      medilife: {
-        title: "MediLife Pharmacy 🏥 — E-Commerce Web App",
-        desc: "A complete online pharmacy platform equipped with category browsing, medicine search filtering, interactive cart checkout, and login verification.",
-        features: [
-          "Dynamic product search & category filtering",
-          "Interactive shopping cart state management",
-          "Responsive mobile-first e-commerce UI",
-          "Deployed on GitHub Pages"
-        ],
-        liveUrl: "https://ani2025-git.github.io/e-commerce/"
-      },
-      tictactoe: {
-        title: "Tic-Tac-Toe Game 🎮 — Interactive Web Game",
-        desc: "A vibrant, responsive Tic-Tac-Toe web game featuring smooth turn indicators, score counters, and win pattern detection.",
-        features: [
-          "Interactive turn state tracking",
-          "Winning combination detection algorithm",
-          "Score counter & reset game logic",
-          "Glassmorphic design styling"
-        ],
-        liveUrl: "https://tic-tac-toe-uwu9.onrender.com"
-      },
-      portfolio: {
-        title: "Portfolio 4.0 ⚡ — Single Page Application",
-        desc: "An ultra-premium personal showcase built with CSS glassmorphism, HTML5 canvas constellation animations, project filtering, and interactive roadmap.",
-        features: [
-          "Interactive canvas particle constellation system",
-          "Filterable project matrix & modal drawers",
-          "Interactive career roadmap timeline",
-          "Zero build tool overhead (Single self-contained HTML SPA)"
-        ],
-        liveUrl: "#"
-      },
-      analytics: {
-        title: "Analytics Hub 📊 — Data Dashboard",
-        desc: "A real-time analytics visualization dashboard featuring custom charting components, dark mode toggle, and filterable metric cards.",
-        features: [
-          "Interactive data charts",
-          "Filterable metric overview",
-          "Dark mode theme support"
-        ],
-        liveUrl: "#"
-      }
-    };
-
-    function openModal(key) {
-      const data = projectDetails[key];
-      if (!data) return;
-
-      document.getElementById("modalTitle").textContent = data.title;
-      document.getElementById("modalDesc").textContent = data.desc;
-
-      const featuresList = document.getElementById("modalFeatures");
-      featuresList.innerHTML = "";
-      data.features.forEach(feat => {
-        const li = document.createElement("li");
-        li.innerHTML = `<i class="fas fa-check-circle"></i> ${feat}`;
-        featuresList.appendChild(li);
-      });
-
-      const liveBtn = document.getElementById("modalLiveBtn");
-      liveBtn.href = data.liveUrl;
-      if (data.liveUrl === "#") {
-        liveBtn.onclick = (e) => {
-          e.preventDefault();
-          showToast("✨ Live demo for this item is coming soon!");
-        };
-      } else {
-        liveBtn.onclick = null;
-      }
-
-      document.getElementById("projectModal").classList.add("active");
-    }
-
-    function closeModal() {
-      document.getElementById("projectModal").classList.remove("active");
-    }
-
-    document.getElementById("projectModal").addEventListener("click", (e) => {
-      if (e.target.id === "projectModal") closeModal();
-    });
-
-    // 12. Resume Preview & Download Handlers
-    function openResumeModal() {
-      document.getElementById("resumeModal").classList.add("active");
-    }
-
-    function closeResumeModal() {
-      document.getElementById("resumeModal").classList.remove("active");
-    }
-
-    document.getElementById("resumeModal").addEventListener("click", (e) => {
-      if (e.target.id === "resumeModal") closeResumeModal();
-    });
-
-    function downloadResume() {
-      showToast("📄 Opening / Downloading Animesh Mishra Resume...");
-      window.open('resume.pdf', '_blank');
-    }
-  </script>
+  <!-- Master JavaScript File -->
+  <script src="script.js"></script>
 </body>
 </html>
