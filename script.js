@@ -161,6 +161,18 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       link: "https://sevasetu-flax-kappa.vercel.app/"
     },
+    smritighar: {
+      title: "SmritiGhar — Museum of Forgotten Things",
+      tag: "Digital Museum & Archive",
+      desc: "SmritiGhar is an interactive educational digital museum and cultural knowledge repository built to preserve everyday objects, heirloom tools, and vintage technologies from past generations with immersive storytelling.",
+      features: [
+        "Curated interactive exhibits categorized by historical era and cultural impact",
+        "Immersive museum aesthetic with custom vintage typography and styling",
+        "Detailed memory archives documenting lost technologies and heirloom artifacts",
+        "Responsive, high-performance experience deployed on Vercel"
+      ],
+      link: "https://smritighar-zzia.vercel.app/"
+    },
     flipquiz: {
       title: "FlipQuiz Platform",
       tag: "Full-Stack Assessment Platform",
