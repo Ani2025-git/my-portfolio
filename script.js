@@ -148,6 +148,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 7. Project Details Modal Data & Handlers
   const projectDetailsMap = {
+    sevasetu: {
+      title: "SevaSetu Platform",
+      tag: "AI & Disaster Response Platform",
+      desc: "SevaSetu is an AI-powered community needs intelligence and disaster-response coordination platform built for NGOs and crisis relief teams. It bridges affected communities with verified volunteer networks using real-time dispatching and offline-first field telemetry.",
+      features: [
+        "Offline-first field intelligence with GPS location & photo telemetry sync",
+        "AI-driven urgency scoring on a normalized severity scale for rapid triage",
+        "Smart proximity dispatching matching qualified volunteers to high-priority zones",
+        "Live coordination heatmaps for real-time situational awareness",
+        "GPS-backed check-ins and verified impact tracking to prevent duplicate efforts"
+      ],
+      link: "https://sevasetu-flax-kappa.vercel.app/"
+    },
     flipquiz: {
       title: "FlipQuiz Platform",
       tag: "Full-Stack Assessment Platform",
