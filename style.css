@@ -1524,3 +1524,131 @@ footer {
 .footer-content-row a:hover {
   color: var(--text-primary);
 }
+
+/* ==========================================================================
+   DEVELOPER TERMINAL MODAL (ACCESSIBLE VIA KEYBOARD ` OR CTRL+K)
+   ========================================================================== */
+.terminal-modal-dialog {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  max-width: 680px;
+  width: 100%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  position: relative;
+  transform: scale(0.96);
+  transition: var(--transition);
+}
+.modal-overlay-backdrop.active .terminal-modal-dialog {
+  transform: scale(1);
+}
+.terminal-header {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.terminal-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-family: monospace, var(--font-body);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.terminal-body {
+  padding: 18px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  overflow-y: auto;
+  flex: 1;
+  min-height: 260px;
+  max-height: 400px;
+  background: var(--bg-card);
+}
+.terminal-output {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 12px;
+}
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+}
+.terminal-prompt-symbol {
+  color: #10b981;
+  font-family: monospace;
+  font-weight: bold;
+}
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13.5px;
+}
+
+/* ==========================================================================
+   PRINT-FRIENDLY RESUME STYLES
+   ========================================================================== */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #cvModal, #cvModal * {
+    visibility: visible;
+  }
+  #cvModal {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  #cvModal .modal-sheet-dialog {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    padding: 24px !important;
+    transform: none !important;
+  }
+  #cvModal .btn-close-modal,
+  #cvModal button,
+  #cvModal a {
+    display: none !important;
+  }
+  #cvModal div[style*="background: var(--bg-surface)"] {
+    background: #f8f8fa !important;
+    border-color: #e5e5ea !important;
+    color: #111111 !important;
+  }
+  #cvModal h2, #cvModal h4 {
+    color: #000000 !important;
+  }
+  #cvModal p, #cvModal li {
+    color: #333333 !important;
+  }
+}

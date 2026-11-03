@@ -6,6 +6,22 @@
   <title>Animesh Mishra — Frontend Developer & UI Engineer</title>
   <meta name="description" content="Portfolio of Animesh Mishra, Frontend Developer & UI Engineer based in India. Specializing in modern JavaScript, React.js, and high-performance, accessible web applications.">
   <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://ani2025-git.github.io/my-portfolio/">
+  <link rel="icon" type="image/png" href="profile.png">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ani2025-git.github.io/my-portfolio/">
+  <meta property="og:title" content="Animesh Mishra — Frontend Developer & UI Engineer">
+  <meta property="og:description" content="Portfolio of Animesh Mishra, Frontend Developer & UI Engineer based in India. Specializing in modern JavaScript, React.js, and high-performance, accessible web applications.">
+  <meta property="og:image" content="https://ani2025-git.github.io/my-portfolio/profile.png">
+
+  <!-- Twitter Meta -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://ani2025-git.github.io/my-portfolio/">
+  <meta name="twitter:title" content="Animesh Mishra — Frontend Developer & UI Engineer">
+  <meta name="twitter:description" content="Portfolio of Animesh Mishra, Frontend Developer & UI Engineer based in India. Specializing in modern JavaScript, React.js, and high-performance, accessible web applications.">
+  <meta name="twitter:image" content="https://ani2025-git.github.io/my-portfolio/profile.png">
 
   <!-- Google Fonts: Raleway (Headings) & Inter (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,7 +103,7 @@
        ========================================================================== -->
   <section class="hero-unfold-cover" id="hero">
     <div class="hero-bg-media" aria-hidden="true">
-      <img src="hero-portrait.jpg?v=11" alt="Animesh Mishra" class="hero-portrait-img">
+      <img src="hero-portrait.jpg?v=11" alt="Animesh Mishra" class="hero-portrait-img" decoding="async" fetchpriority="high">
       <div class="hero-vignette-overlay"></div>
     </div>
 
@@ -166,7 +182,7 @@
                 <span>Live Demo</span>
                 <i class="fas fa-arrow-up-right-from-square" style="font-size: 11px;"></i>
               </a>
-              <a href="https://github.com/ani2025-git" target="_blank" rel="noopener noreferrer" class="btn-github-code" title="View Source Code on GitHub">
+              <a href="https://github.com/Ani2025-git/internship" target="_blank" rel="noopener noreferrer" class="btn-github-code" title="View Source Code on GitHub">
                 <i class="fab fa-github"></i> <span>Code</span>
               </a>
               <button class="btn-info-pop" data-key="sevasetu">
@@ -208,7 +224,7 @@
                 <span>Live Demo</span>
                 <i class="fas fa-arrow-up-right-from-square" style="font-size: 11px;"></i>
               </a>
-              <a href="https://github.com/ani2025-git" target="_blank" rel="noopener noreferrer" class="btn-github-code" title="View Source Code on GitHub">
+              <a href="https://github.com/Ani2025-git/smritighar" target="_blank" rel="noopener noreferrer" class="btn-github-code" title="View Source Code on GitHub">
                 <i class="fab fa-github"></i> <span>Code</span>
               </a>
               <button class="btn-info-pop" data-key="smritighar">
@@ -404,7 +420,7 @@
           <div class="about-photo-wrap">
             <div class="about-dotted-accent" aria-hidden="true"></div>
             <div class="about-photo-box">
-              <img src="profile.jpg?v=2" alt="Animesh Mishra" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'">
+              <img src="profile.jpg?v=2" alt="Animesh Mishra" loading="lazy" decoding="async" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'">
             </div>
           </div>
         </div>
@@ -724,6 +740,8 @@
         <!-- Contact Form -->
         <div class="contact-form-card">
           <form id="contactForm" onsubmit="handleFormSubmit(event)">
+            <!-- Spam Protection Honeypot -->
+            <input type="text" name="_gotcha" id="honeypot" style="display:none !important;" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-input-group">
               <input type="text" id="senderName" class="unfold-input" placeholder="Your Name" required>
             </div>
@@ -787,12 +805,15 @@
       </div>
 
       <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-        <button class="btn-unfold-pill-white" onclick="window.print()">
-          <i class="fas fa-print"></i> Print / Save as PDF
-        </button>
-        <a href="mailto:animeshmishra4123@gmail.com?subject=Job%20Opportunity%20for%20Animesh%20Mishra" class="btn-unfold-pill-trans">
-          <i class="fas fa-briefcase"></i> Discuss Opportunity
+        <a href="resume.pdf" download="Animesh_Mishra_Resume.pdf" class="btn-unfold-pill-white" style="text-decoration:none;">
+          <i class="fas fa-file-download"></i> Download Resume PDF
         </a>
+        <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-unfold-pill-trans" style="text-decoration:none;">
+          <i class="fas fa-eye"></i> View Resume
+        </a>
+        <button class="btn-unfold-pill-trans" onclick="window.print()">
+          <i class="fas fa-print"></i> Print
+        </button>
       </div>
     </div>
   </div>
@@ -805,6 +826,60 @@
       <button class="btn-close-modal" onclick="closeModal('projectModal')" aria-label="Close modal"><i class="fas fa-times"></i></button>
       <div id="projectModalContent">
         <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       INTERACTIVE DEVELOPER TERMINAL MODAL (ACCESSIBLE VIA KEYBOARD ` OR CTRL+K)
+       ========================================================================== -->
+  <div class="modal-overlay-backdrop" id="terminalModal" aria-hidden="true">
+    <div class="terminal-modal-dialog">
+      <div class="terminal-header">
+        <div class="terminal-title">
+          <i class="fas fa-terminal"></i> animesh@dev-terminal:~ (Press ` or Esc to exit)
+        </div>
+        <button class="btn-close-modal" onclick="closeModal('terminalModal')" aria-label="Close terminal" style="position:static; width:28px; height:28px; font-size:12px;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div class="terminal-output" id="terminalOutput">Welcome to Animesh Mishra's Developer Terminal [Version 2.0]
+Type <span style="color:#60a5fa;">help</span> to see available commands.
+</div>
+      </div>
+      <div class="terminal-input-row">
+        <span class="terminal-prompt-symbol">➜ ~</span>
+        <input type="text" id="terminalInput" class="terminal-input" placeholder="Type a command (help, about, projects, skills, github, contact)..." autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       GITHUB REPOSITORIES MODAL
+       ========================================================================== -->
+  <div class="modal-overlay-backdrop" id="githubModal" aria-hidden="true">
+    <div class="modal-sheet-dialog">
+      <button class="btn-close-modal" onclick="closeModal('githubModal')" aria-label="Close modal"><i class="fas fa-times"></i></button>
+      <div style="margin-bottom: 20px;">
+        <span class="project-category-tag" style="margin-bottom: 8px; display:inline-block;">GitHub Public Integration</span>
+        <h2 style="font-family: var(--font-heading); font-size: 24px; color:var(--text-primary); margin-top: 4px; font-weight: 700;">Live Repositories &amp; Activity</h2>
+        <p style="color: var(--text-secondary); font-size: 13.5px; margin-top: 6px;">
+          Connected live to GitHub API for <a href="https://github.com/Ani2025-git" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary); font-weight:600;">@Ani2025-git</a>.
+        </p>
+      </div>
+      <div id="githubReposList">
+        <div style="text-align: center; padding: 30px; color: var(--text-muted); font-size: 14px;">
+          <i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i> Fetching latest repositories from GitHub...
+        </div>
+      </div>
+      <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 12px;">
+        <a href="https://github.com/Ani2025-git" target="_blank" rel="noopener noreferrer" class="btn-unfold-pill-white" style="font-size: 13px; padding: 10px 20px; text-decoration:none;">
+          <i class="fab fa-github"></i> View All On GitHub
+        </a>
+        <button class="btn-unfold-pill-trans" onclick="closeModal('githubModal')" style="font-size: 13px; padding: 10px 20px;">
+          Close
+        </button>
       </div>
     </div>
   </div>
@@ -828,6 +903,8 @@
           <a href="#services">Services</a>
           <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
+          <a href="javascript:void(0)" onclick="openModal('githubModal')">GitHub Repos</a>
+          <a href="javascript:void(0)" onclick="openModal('terminalModal')">Terminal <span style="font-size:10px; opacity:0.6;">(`)</span></a>
         </div>
       </div>
     </div>
