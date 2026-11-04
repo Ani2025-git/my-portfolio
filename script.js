@@ -510,6 +510,8 @@ async function handleFormSubmit(e) {
   const msgInput = document.getElementById("senderMsg");
   const honeypot = document.getElementById("honeypot");
   const btn = document.getElementById("submitBtn");
+  const fallbackBox = document.getElementById("contactFallbackAlert");
+  const fallbackLink = document.getElementById("contactFallbackLink");
 
   const name = nameInput.value.trim();
   const email = emailInput.value.trim();
@@ -520,6 +522,7 @@ async function handleFormSubmit(e) {
   if (honeypot && honeypot.value.trim() !== "") {
     showToast("✨ Message received. Thank you!");
     document.getElementById("contactForm").reset();
+    if (fallbackBox) fallbackBox.style.display = "none";
     return;
   }
 
@@ -554,25 +557,35 @@ async function handleFormSubmit(e) {
     return;
   }
 
+  // Reliable mailto fallback URL
+  const mailtoUrl = `mailto:animeshmishra4123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("From: " + name + " (" + email + ")\n\n" + message)}`;
+
+  // Helper to trigger clickable mailto fallback while PRESERVING user input
+  const triggerMailtoFallback = (noticeText) => {
+    if (fallbackBox && fallbackLink) {
+      fallbackLink.href = mailtoUrl;
+      fallbackBox.style.display = "block";
+    }
+    showToast(noticeText || "⚠️ Opening email client. A direct fallback link is ready below.");
+    try {
+      window.location.href = mailtoUrl;
+    } catch (err) {
+      console.warn("Direct mailto navigation prevented by browser:", err);
+    }
+  };
+
   // 4. Submission Loading State
   const originalHtml = btn.innerHTML;
   btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Sending...`;
   btn.disabled = true;
 
-  // 5. Check if provider key is configured; if unconfigured, fallback directly to mailto
+  // 5. If Web3Forms access key is unconfigured, trigger reliable mailto fallback
   if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
     setTimeout(() => {
-      btn.innerHTML = `<i class="fas fa-envelope-open-text"></i> Opening Mail Client...`;
-      showToast("📬 Opening your email client to send message...");
-      const mailtoUrl = `mailto:animeshmishra4123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("From: " + name + " (" + email + ")\n\n" + message)}`;
-      window.location.href = mailtoUrl;
-
-      setTimeout(() => {
-        btn.innerHTML = originalHtml;
-        btn.disabled = false;
-        document.getElementById("contactForm").reset();
-      }, 3000);
-    }, 600);
+      btn.innerHTML = originalHtml;
+      btn.disabled = false;
+      triggerMailtoFallback("📬 Access key unconfigured. Direct mail link prepared below.");
+    }, 400);
     return;
   }
 
@@ -595,12 +608,13 @@ async function handleFormSubmit(e) {
 
     const result = await res.json().catch(() => ({}));
 
-    // 6. Check Provider Confirmation before claiming success
+    // 6. Strict Provider Confirmation: Never show success notification unless Web3Forms confirms success
     if (res.ok && result.success === true) {
       lastSubmissionTime = Date.now();
       btn.innerHTML = `<i class="fas fa-check"></i> Message Sent!`;
       showToast(`✨ Thank you, ${name}! Your message has been delivered.`);
       document.getElementById("contactForm").reset();
+      if (fallbackBox) fallbackBox.style.display = "none";
 
       setTimeout(() => {
         btn.innerHTML = originalHtml;
@@ -610,19 +624,37 @@ async function handleFormSubmit(e) {
       throw new Error(result.message || "Delivery provider rejected submission");
     }
   } catch (err) {
-    console.warn("Contact delivery error, triggering mailto fallback:", err);
-    btn.innerHTML = `<i class="fas fa-paper-plane"></i> Opening Mail...`;
-    showToast("⚠️ Service unreachable. Opening your email app...");
-
-    // 7. Graceful Mailto Fallback
-    const mailtoUrl = `mailto:animeshmishra4123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("From: " + name + " (" + email + ")\n\n" + message)}`;
-    window.location.href = mailtoUrl;
-
-    setTimeout(() => {
-      btn.innerHTML = originalHtml;
-      btn.disabled = false;
-    }, 4000);
+    console.warn("Contact delivery error, activating mailto fallback:", err);
+    btn.innerHTML = originalHtml;
+    btn.disabled = false;
+    // Preserve entered message: DO NOT call reset() here
+    triggerMailtoFallback("⚠️ Service unreachable. Direct email link ready below.");
   }
+}
+
+// Security sanitizers: XSS prevention & URL validation
+function escapeHtml(str) {
+  if (str === null || str === undefined) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function sanitizeGitHubUrl(url) {
+  if (!url || typeof url !== "string") return "#";
+  try {
+    const parsed = new URL(url);
+    if ((parsed.protocol === "https:" || parsed.protocol === "http:") &&
+        (parsed.hostname === "github.com" || parsed.hostname.endsWith(".github.com"))) {
+      return parsed.href;
+    }
+  } catch (e) {
+    // Malformed URL
+  }
+  return "#";
 }
 
 // GitHub Live API Service
@@ -630,10 +662,11 @@ const GITHUB_USERNAME = "Ani2025-git";
 const GITHUB_CACHE_KEY = "ani2025_github_data";
 const GITHUB_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
-function getGitHubFallbackData() {
+function getGitHubOfflineArchive() {
   return {
-    publicRepos: 12,
-    followers: 0,
+    source: "offline_archive",
+    publicRepos: null, // Never hardcode fake repo counts
+    followers: null,
     repos: [
       { name: "internship", desc: "Seva Setu — Citizen welfare & government schemes assistance platform (Flask & React)", lang: "HTML", stars: 0, updated: "Oct 16, 2026", url: "https://github.com/Ani2025-git/internship" },
       { name: "smritighar", desc: "SmritiGhar — Digital museum and cultural knowledge repository preserving heritage items", lang: "JavaScript", stars: 0, updated: "Oct 7, 2026", url: "https://github.com/Ani2025-git/smritighar" },
@@ -646,17 +679,16 @@ function getGitHubFallbackData() {
 }
 
 async function fetchGitHubData(forceRefresh = false) {
-  if (!forceRefresh) {
-    try {
-      const cached = localStorage.getItem(GITHUB_CACHE_KEY);
-      if (cached) {
-        const parsed = JSON.parse(cached);
-        if (Date.now() - parsed.timestamp < GITHUB_CACHE_TTL) {
-          return parsed.data;
-        }
+  let cachedPayload = null;
+  try {
+    const cached = localStorage.getItem(GITHUB_CACHE_KEY);
+    if (cached) {
+      cachedPayload = JSON.parse(cached);
+      if (!forceRefresh && (Date.now() - cachedPayload.timestamp < GITHUB_CACHE_TTL)) {
+        return { ...cachedPayload.data, source: "cache" };
       }
-    } catch (e) {}
-  }
+    }
+  } catch (e) {}
 
   try {
     const [userRes, reposRes] = await Promise.all([
@@ -665,15 +697,16 @@ async function fetchGitHubData(forceRefresh = false) {
     ]);
 
     if (!userRes.ok || !reposRes.ok) {
-      throw new Error(`API error ${userRes.status || reposRes.status}`);
+      throw new Error(`GitHub API HTTP ${userRes.status || reposRes.status}`);
     }
 
     const user = await userRes.json();
     const repos = await reposRes.json();
 
     const data = {
-      publicRepos: user.public_repos || 12,
-      followers: user.followers || 0,
+      source: "live",
+      publicRepos: typeof user.public_repos === "number" ? user.public_repos : null,
+      followers: typeof user.followers === "number" ? user.followers : 0,
       repos: (Array.isArray(repos) ? repos : []).map(r => ({
         name: r.name,
         desc: r.description || "Active software development repository",
@@ -690,8 +723,12 @@ async function fetchGitHubData(forceRefresh = false) {
 
     return data;
   } catch (err) {
-    console.warn("GitHub API offline/rate-limited. Loading fallback:", err.message);
-    return getGitHubFallbackData();
+    console.warn("GitHub API offline/rate-limited. Checking cache or offline archive:", err.message);
+    // Preserve last valid cached data when available, even if expired
+    if (cachedPayload && cachedPayload.data) {
+      return { ...cachedPayload.data, source: "expired_cache" };
+    }
+    return getGitHubOfflineArchive();
   }
 }
 
@@ -699,34 +736,61 @@ async function renderGitHubModal() {
   const container = document.getElementById("githubReposList");
   if (!container) return;
 
+  container.innerHTML = `<div style="text-align:center; padding:28px; color:var(--text-muted);"><i class="fas fa-spinner fa-spin" style="margin-right:8px;"></i> Loading repository data...</div>`;
+
   const data = await fetchGitHubData();
   if (!data || !data.repos || data.repos.length === 0) {
     container.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted);">No public repositories found.</div>`;
     return;
   }
 
+  // Clear, non-deceptive status indicator
+  let statusBadge = "";
+  if (data.source === "live") {
+    statusBadge = `<span style="font-size:12px; color:var(--text-muted);"><i class="fas fa-circle" style="font-size:8px; color:#10b981; margin-right:4px;"></i> Live Sync</span>`;
+  } else if (data.source === "cache") {
+    statusBadge = `<span style="font-size:12px; color:var(--text-muted);"><i class="fas fa-history" style="font-size:10px; color:#38bdf8; margin-right:4px;"></i> Cached Snapshot</span>`;
+  } else if (data.source === "expired_cache") {
+    statusBadge = `<span style="font-size:12px; color:var(--text-muted);"><i class="fas fa-history" style="font-size:10px; color:#f59e0b; margin-right:4px;"></i> Stale Cache (Offline)</span>`;
+  } else {
+    statusBadge = `<span style="font-size:12px; color:var(--text-muted);"><i class="fas fa-triangle-exclamation" style="font-size:10px; color:#ef4444; margin-right:4px;"></i> Offline Archive (API Unavailable)</span>`;
+  }
+
+  // Repository count display: never fake live counts
+  const repoCountText = (data.publicRepos !== null && data.publicRepos !== undefined)
+    ? `<strong style="color:var(--text-primary);">${Number(data.publicRepos)}</strong>`
+    : `<span style="color:var(--text-muted); font-size:12px;">Unavailable (Offline Archive)</span>`;
+
   container.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding:12px 16px; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-sm);">
-      <span style="font-size:13.5px; color:var(--text-secondary);"><i class="fas fa-book-bookmark" style="margin-right:6px;"></i> Public Repositories: <strong style="color:var(--text-primary);">${data.publicRepos}</strong></span>
-      <span style="font-size:12px; color:var(--text-muted);"><i class="fas fa-circle" style="font-size:8px; color:#10b981; margin-right:4px;"></i> Live Sync</span>
+      <span style="font-size:13.5px; color:var(--text-secondary);"><i class="fas fa-book-bookmark" style="margin-right:6px;"></i> Public Repositories: ${repoCountText}</span>
+      ${statusBadge}
     </div>
     <div style="display:grid; grid-template-columns:1fr; gap:12px; max-height:48vh; overflow-y:auto; padding-right:4px;">
-      ${data.repos.map(r => `
+      ${data.repos.map(r => {
+        const safeName = escapeHtml(r.name);
+        const safeLang = escapeHtml(r.lang);
+        const safeDesc = escapeHtml(r.desc);
+        const safeStars = Number(r.stars) || 0;
+        const safeUpdated = escapeHtml(r.updated);
+        const safeUrl = sanitizeGitHubUrl(r.url);
+        return `
         <div style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:14px 16px;">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
-            <a href="${r.url}" target="_blank" rel="noopener noreferrer" style="font-size:14px; font-weight:600; color:var(--text-primary); text-decoration:none; display:flex; align-items:center; gap:6px;">
-              <i class="fab fa-github" style="font-size:14px;"></i> ${r.name}
+            <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="font-size:14px; font-weight:600; color:var(--text-primary); text-decoration:none; display:flex; align-items:center; gap:6px;">
+              <i class="fab fa-github" style="font-size:14px;"></i> ${safeName}
               <i class="fas fa-arrow-up-right-from-square" style="font-size:10px; color:var(--text-muted);"></i>
             </a>
-            <span style="font-size:11px; background:var(--accent-subtle-bg); border:1px solid var(--border-subtle); border-radius:var(--radius-pill); padding:2px 8px; color:var(--text-secondary); font-family:monospace;">${r.lang}</span>
+            <span style="font-size:11px; background:var(--accent-subtle-bg); border:1px solid var(--border-subtle); border-radius:var(--radius-pill); padding:2px 8px; color:var(--text-secondary); font-family:monospace;">${safeLang}</span>
           </div>
-          <p style="font-size:12.5px; color:var(--text-secondary); line-height:1.5; margin:0 0 8px 0;">${r.desc}</p>
+          <p style="font-size:12.5px; color:var(--text-secondary); line-height:1.5; margin:0 0 8px 0;">${safeDesc}</p>
           <div style="display:flex; gap:14px; font-size:11.5px; color:var(--text-muted);">
-            <span><i class="far fa-star"></i> ${r.stars}</span>
-            <span><i class="far fa-clock"></i> ${r.updated}</span>
+            <span><i class="far fa-star"></i> ${safeStars}</span>
+            <span><i class="far fa-clock"></i> ${safeUpdated}</span>
           </div>
         </div>
-      `).join("")}
+      `;
+      }).join("")}
     </div>
   `;
 }
@@ -791,11 +855,18 @@ production web systems like SevaSetu and FlipQuiz.`,
 
     github: async () => {
       const data = await fetchGitHubData();
-      return `GitHub Live Statistics (@Ani2025-git):
-  • Public Repositories: ${data.publicRepos}
-  • Follower Count:      ${data.followers}
+      let statusLabel = "Live API Sync";
+      if (data.source === "cache") statusLabel = "Cached Snapshot";
+      else if (data.source === "expired_cache") statusLabel = "Stale Cache (Offline)";
+      else if (data.source === "offline_archive") statusLabel = "Offline Archive (API Unavailable)";
+
+      const repoCount = (data.publicRepos !== null && data.publicRepos !== undefined) ? data.publicRepos : "Unavailable (Offline Archive)";
+      const followerCount = (data.followers !== null && data.followers !== undefined) ? data.followers : "Unavailable";
+      return `GitHub Repositories (@${GITHUB_USERNAME}) [Status: ${statusLabel}]:
+  • Public Repositories: ${repoCount}
+  • Follower Count:      ${followerCount}
   • Latest Public Repos:
-${data.repos.map(r => `    - ${r.name.padEnd(20)} [${r.lang}] (Updated: ${r.updated})\n      ${r.url}`).join("\n")}`;
+${data.repos.map(r => `    - ${(r.name || "").padEnd(20)} [${r.lang || "Code"}] (Updated: ${r.updated})\n      ${sanitizeGitHubUrl(r.url)}`).join("\n")}`;
     },
 
     clear: () => {
@@ -846,10 +917,6 @@ ${data.repos.map(r => `    - ${r.name.padEnd(20)} [${r.lang}] (Updated: ${r.upda
       }
     }
   });
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
 // Initialize Terminal on DOM load
