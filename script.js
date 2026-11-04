@@ -151,6 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sevasetu: {
       title: "Seva Setu — Citizen Assistance Platform",
       tag: "Full-Stack Web App",
+      screenshot: "screenshots/sevasetu.png",
       desc: "Seva Setu is an independent, citizen-centric public assistance and government welfare guide platform built for West Bengal, India. It provides a unified gateway for citizens to navigate welfare schemes, calculate document readiness, and find authorized government service counters.",
       problem: "Citizens struggle with scattered eligibility guidelines across dozens of departmental websites, experience anxiety over missing documents leading to repeated block office visits, and risk exploitation by unauthorized middlemen charging fees for free public services.",
       solution: "Engineered a centralized, verified directory of flagship welfare schemes (Kanyashree, Lakshmir Bhandar, Swasthya Sathi, etc.) paired with interactive client-side document checklists, an authentic BSK counter locator, and safety redirect warnings.",
@@ -170,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
     smritighar: {
       title: "SmritiGhar — Museum of Forgotten Things",
       tag: "Digital Museum & Archive",
+      screenshot: "screenshots/smritighar.png",
       desc: "SmritiGhar is an interactive educational digital museum and cultural knowledge repository built to preserve everyday objects, heirloom tools, and vintage technologies from past generations through immersive digital storytelling.",
       problem: "Rapid technological advancement has caused everyday historical artifacts, ancestral household items, and cultural craftsmanship to fade from collective memory without structured digital archiving.",
       solution: "Created an immersive digital museum featuring categorized exhibition galleries, historical era timelines, and dual-language archive guides built on modern component architecture.",
@@ -189,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     flipquiz: {
       title: "FlipQuiz Platform",
       tag: "Full-Stack Assessment Platform",
+      screenshot: "screenshots/flipquiz.png",
       desc: "FlipQuiz is an interactive web platform designed for rapid concept testing, card-flip memory training, and dynamic quiz evaluations.",
       problem: "Standard web quizzes are flat and unengaging, lacking physical tactile feedback to reinforce question retention.",
       solution: "Developed an interactive card mechanic with 3D flip physics, dynamic score calculation, and real-time category filtering.",
@@ -207,6 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
     medilife: {
       title: "MediLife Pharmacy Storefront",
       tag: "E-Commerce Medicine Store",
+      screenshot: "screenshots/medilife.png",
       desc: "A feature-complete online pharmacy storefront featuring medicine category filtering, dynamic shopping cart state with live subtotal calculation, and client-side checkout simulation.",
       problem: "Online medical stores require clear, instant categorization and accurate cart calculations without disruptive page reloads.",
       solution: "Engineered a clean storefront catalog with instant search filtering, real-time quantity counters, dynamic price calculation, and account access views.",
@@ -225,6 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tictactoe: {
       title: "Tic-Tac-Toe Arena",
       tag: "Interactive Web Game",
+      screenshot: "screenshots/tictactoe.png",
       desc: "A 2D matrix turn-based web game with smart mathematical win-line strike algorithms, player round histories, dynamic turn indicators, and responsive controls.",
       problem: "Delivering a classic game that feels modern and prevents race conditions or invalid move states.",
       solution: "Implemented an O(1) matrix win-line validator, turn indicator transitions, round history tracking, and clear audio-visual cues.",
@@ -243,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
     analytics: {
       title: "Analytics Dashboard Hub",
       tag: "Data Visualization & Metrics",
+      screenshot: "screenshots/analytics-placeholder.svg",
       desc: "An interactive data console showcasing real-time metric graphs, KPI status indicators, and modular widget layouts designed for data clarity.",
       problem: "Complex metric streams often overwhelm users without structured visual hierarchy and high-contrast styling.",
       solution: "Engineered a dark-mode data dashboard featuring KPI summary tiles, vector charts, and customizable widget sections.",
@@ -267,9 +273,27 @@ document.addEventListener("DOMContentLoaded", () => {
       const modalContent = document.getElementById("projectModalContent");
       if (data && modalContent) {
         modalContent.innerHTML = `
-          <div style="margin-bottom: 20px;">
+          <div style="margin-bottom: 16px;">
             <span class="project-category-tag" style="margin-bottom: 8px; display:inline-block;">${data.tag}</span>
             <h2 style="font-family: var(--font-heading); font-size: 24px; color:var(--text-primary); margin-top: 4px; font-weight: 700; letter-spacing: -0.02em;">${data.title}</h2>
+          </div>
+
+          <!-- Actual Live Deployment Screenshot Preview -->
+          <div style="margin-bottom: 20px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-subtle); background: var(--bg-surface);">
+            <div class="browser-frame-header" style="border-radius: 0; background: var(--bg-surface); padding: 8px 12px;">
+              <div class="browser-dots">
+                <span class="dot dot-close"></span>
+                <span class="dot dot-minimize"></span>
+                <span class="dot dot-expand"></span>
+              </div>
+              <div class="browser-address-bar" style="font-size: 11px;">
+                <i class="fas fa-lock" style="font-size: 9px;"></i> ${data.demoLink !== '#' ? data.demoLink.replace('https://', '').replace(/\/$/, '') : 'staging.animesh.dev'}
+              </div>
+              <span class="browser-live-badge" style="font-size: 9px; padding: 2px 6px;">
+                <span class="live-dot" style="width: 5px; height: 5px;"></span> ${data.demoLink !== '#' ? 'VERIFIED DEPLOYMENT' : 'STAGING PREVIEW'}
+              </span>
+            </div>
+            <img src="${data.screenshot}" alt="${data.title} Interface Preview" loading="lazy" decoding="async" style="width: 100%; height: auto; max-height: 280px; object-fit: cover; object-position: top; display: block;">
           </div>
 
           <!-- Overview -->
@@ -471,7 +495,11 @@ function copyContact(text) {
   });
 }
 
-// Contact Form Handler with Validation, Spam Protection & Confirmed Delivery
+// Contact Form Handler with Validation, Spam Protection & Web3Forms Delivery
+// SETUP: Get your free Access Key at https://web3forms.com (delivered to your email in 10s)
+// Paste it below to enable automated in-browser background delivery:
+const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+
 let lastSubmissionTime = 0;
 
 async function handleFormSubmit(e) {
@@ -531,28 +559,47 @@ async function handleFormSubmit(e) {
   btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Sending...`;
   btn.disabled = true;
 
+  // 5. Check if provider key is configured; if unconfigured, fallback directly to mailto
+  if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
+    setTimeout(() => {
+      btn.innerHTML = `<i class="fas fa-envelope-open-text"></i> Opening Mail Client...`;
+      showToast("📬 Opening your email client to send message...");
+      const mailtoUrl = `mailto:animeshmishra4123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("From: " + name + " (" + email + ")\n\n" + message)}`;
+      window.location.href = mailtoUrl;
+
+      setTimeout(() => {
+        btn.innerHTML = originalHtml;
+        btn.disabled = false;
+        document.getElementById("contactForm").reset();
+      }, 3000);
+    }, 600);
+    return;
+  }
+
   try {
-    const res = await fetch("https://formsubmit.co/ajax/animeshmishra4123@gmail.com", {
+    const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
       body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
         name: name,
         email: email,
-        _subject: `[Portfolio Inquiry] ${subject}`,
-        message: message
+        subject: `[Portfolio Inquiry] ${subject}`,
+        message: message,
+        from_name: "Animesh Mishra Portfolio"
       })
     });
 
     const result = await res.json().catch(() => ({}));
 
-    // 5. Check Provider Confirmation before claiming success
-    if (res.ok && (result.success === "true" || result.success === true || res.status === 200)) {
+    // 6. Check Provider Confirmation before claiming success
+    if (res.ok && result.success === true) {
       lastSubmissionTime = Date.now();
       btn.innerHTML = `<i class="fas fa-check"></i> Message Sent!`;
-      showToast(`✨ Thank you, ${name}! Your message has been received.`);
+      showToast(`✨ Thank you, ${name}! Your message has been delivered.`);
       document.getElementById("contactForm").reset();
 
       setTimeout(() => {
@@ -565,9 +612,9 @@ async function handleFormSubmit(e) {
   } catch (err) {
     console.warn("Contact delivery error, triggering mailto fallback:", err);
     btn.innerHTML = `<i class="fas fa-paper-plane"></i> Opening Mail...`;
-    showToast("⚠️ Online service unreachable. Opening your email app...");
+    showToast("⚠️ Service unreachable. Opening your email app...");
 
-    // 6. Graceful Mailto Fallback
+    // 7. Graceful Mailto Fallback
     const mailtoUrl = `mailto:animeshmishra4123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("From: " + name + " (" + email + ")\n\n" + message)}`;
     window.location.href = mailtoUrl;
 
